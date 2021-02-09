@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {HiOutlineRefresh} from 'react-icons/hi'
+import DataChart from '../Charts/DataChart'
 
 const SingleTeacher = () => {
 
@@ -35,6 +36,11 @@ const SingleTeacher = () => {
                     <div className='header'>
                         <p>Student Overview</p>
                     </div>
+                    <DataChart 
+                        margin="2rem 0rem"
+                        labels={['Male', 'Female']}
+                        data = {[30, 25, 0]}
+                    />
                 </div>
             </div>
             <div className='test-notices'>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {AiFillDashboard} from 'react-icons/ai'
 import {GiTeacher} from 'react-icons/gi'
@@ -7,8 +7,11 @@ import {IoSchoolSharp} from 'react-icons/io5'
 import PeopleSharpIcon from '@material-ui/icons/PeopleSharp'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable'
 import {Link} from 'react-router-dom'
+import AdminContext from '../context/admin/adminContext'
 
 const SideNavigation = () => {
+
+    const adminContext = useContext(AdminContext);
 
     // Icons styles
     const style = {
@@ -27,7 +30,7 @@ const SideNavigation = () => {
                 <Link to='/' style={{color: "#fff"}}>
                     <li> <AiFillDashboard style={style}/> Dashboard</li>
                 </Link>
-                <Link to='/teachers' style={{color: "#fff"}}>
+                <Link   to='/teachers' style={{color: "#fff"}}>
                     <li> <GiTeacher style={style}/> Teachers</li>
                 </Link>
                 <Link to='/students' style={{color: "#fff"}}>

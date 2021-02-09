@@ -6,6 +6,7 @@ const Parents = () => {
         <Table 
             heading="All Parents"
             title="Parent Id"
+            linkTo="parents"
         />
     )
 }

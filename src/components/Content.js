@@ -16,7 +16,7 @@ const Content = () => {
 const ContentStyles = styled.div`
     display: grid;
     grid-template-columns: 20% 1fr;
-    grid-gap: 2rem;
+    grid-gap: 2rem; 
     margin-right: 2rem;
 `;
 

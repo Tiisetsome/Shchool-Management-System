@@ -11,6 +11,7 @@ import SingleTeacher from './SinglePerson/SingleTeacher'
 import TeacherSummary from './SinglePerson/TeacherSummary'
 import TopBar from './TopBar/TopBar'
 import SingleStudent from './SinglePerson/SingleStudent';
+import SingleParent from './SinglePerson/SingleParent';
 
 const Main = () => {
     return (
@@ -37,9 +38,12 @@ const Main = () => {
                     <TeacherSummary icons="student"/>
                     <SingleStudent/>
                 </Route>
-                <Route path="/parents">
+                <Route exact path="/parents">
                     <TopBar icons="parents"/>
                     <Parents/>
+                </Route>
+                <Route path="/parents/:id">
+                    <SingleParent/>
                 </Route>
             </Switch>
         </MainStyles>

@@ -1,13 +1,14 @@
 import './App.css';
 import Content from './components/Content';
 import Navigation from './components/Navigation';
+import AdminState from './context/admin/AdminState'
 
 function App() {
   return (
-    <div className="App">
-      <Navigation/>
-      <Content/>
-    </div>
+      <AdminState>
+         <Navigation/>
+         <Content/>
+      </AdminState>
   );
 }
 

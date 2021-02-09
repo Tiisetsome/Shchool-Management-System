@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import DataChart from '../Charts/DataChart'
 import Search from '../Forms/Search'
 
 const SingleStudent = () => {
@@ -98,7 +99,11 @@ const SingleStudent = () => {
                     <p>Year 2020</p>
                 </div>
                 <div className="chart">
-
+                    <DataChart
+                         margin="0rem"
+                         labels={['Present', 'Absent']}
+                         data = {[30, 2, 0]}
+                    />
                 </div>
             </div>
         </StudentStyles>
@@ -257,6 +262,7 @@ const StudentStyles = styled.section`
         padding: 4rem 0rem;
         background-image: linear-gradient(rgb(245, 71, 115), rgb(153, 8, 44));
         display: grid;
+        align-items: center;
         grid-template-columns: 1fr 1fr;
         gap: 3rem;
 

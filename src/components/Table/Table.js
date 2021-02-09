@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {FaTrash} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
@@ -6,8 +6,11 @@ import {IoEyeSharp} from 'react-icons/io5'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Search from '../Forms/Search'
+import AdminContext from '../../context/admin/adminContext'
 
 const Table = ({heading, title, linkTo}) => {
+
+    const adminContext = useContext(AdminContext);
 
     // Single Page Handler
     const singlePageHandler = (page)=>{
