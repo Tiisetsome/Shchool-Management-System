@@ -29,8 +29,6 @@ const SingleTeacher = () => {
         searchTestsNotices();
     }, [])
 
-    console.log(students)
-
     return (
         <SingleStyles>
             <div className='teacher-profile'>

@@ -24,7 +24,6 @@ const SingleStudent = () => {
         searchStudentMarks(id)
     }, [])
 
-    console.log(student_marks)
     return (
         <StudentStyles>
             <div className="student-profile-summary">

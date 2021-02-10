@@ -60,7 +60,7 @@ const AdminState = props => {
 
     // Get Single Student
     const searchStudent = (id) => {
-        const student = state.teachers.find(teacher => id === teacher.student_id);
+        const student = state.students.find(student => id === student.student_id);
     
         dispatch({
             type: SEARCH_STUDENT,

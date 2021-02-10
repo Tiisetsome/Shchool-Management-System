@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import {FaTrash} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
@@ -6,27 +6,9 @@ import {IoEyeSharp} from 'react-icons/io5'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Search from '../Forms/Search'
-import AdminContext from '../../context/admin/adminContext'
 
-const Table = ({heading, title, linkTo, query}) => {
-
-    // Use admin context
-    const adminContext = useContext(AdminContext);
-
-    // Destructure items
-    const {teachers, searchTeachers} = adminContext;
-
-    // Local state
-
-    useEffect(() => {
-        
-        // Search either teachers, students or parents
-         searchTeachers(query);
-    }, [query])
-
+const Table = ({heading, title, linkTo, query, persons}) => {
     
-
-
     return (
         <TableStyles>
             <div className="header">
@@ -48,20 +30,20 @@ const Table = ({heading, title, linkTo, query}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {teachers.length > 0 ? teachers.map(teacher =>{
-                        return <tr key={teacher.id}>
-                                    <td>{teacher.teacher_id? teacher.teacher_id : teacher.student_id? teacher.student_id: teacher.parent_id}</td>
+                    {persons.length > 0 ? persons.map(person =>{
+                        return <tr key={person.id}>
+                                    <td>{person.teacher_id? person.teacher_id : person.student_id? person.student_id: person.parent_id}</td>
                                     <td>
                                         <div></div>
                                     </td>
-                                    <td>{teacher.fname}</td>
-                                    <td>{teacher.lname}</td>
-                                    <td>{teacher.gender}</td>
-                                    <td>{teacher.classes}</td>
-                                    <td>{teacher.age}</td>
-                                    <td>{teacher.email}</td>
+                                    <td>{person.fname}</td>
+                                    <td>{person.lname}</td>
+                                    <td>{person.gender}</td>
+                                    <td>{person.classes}</td>
+                                    <td>{person.age}</td>
+                                    <td>{person.email}</td>
                                     <td>
-                                        <Link to={`/${linkTo}/${teacher.teacher_id? teacher.teacher_id : teacher.student_id? teacher.student_id: teacher.parent_id}`}><IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/></Link>
+                                        <Link to={`/${linkTo}/${person.teacher_id? person.teacher_id : person.student_id? person.student_id: person.parent_id}`}><IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/></Link>
                                         <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
                                         <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
                                     </td>

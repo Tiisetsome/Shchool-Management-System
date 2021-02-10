@@ -9,7 +9,7 @@ const HomeContent = () => {
     const adminContext = useContext(AdminContext);
 
     // Destructure items
-    const {notices, searchNotices} = adminContext;
+    const {notices, teachers, searchTeachers, searchNotices} = adminContext;
 
     // Refresh notices
     const refreshNoticesHandler = () => {
@@ -27,6 +27,7 @@ const HomeContent = () => {
         
         // Get notices
         searchNotices();
+        searchTeachers('teachers');
 
     }, [])
 
