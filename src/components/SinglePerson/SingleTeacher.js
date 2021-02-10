@@ -1,14 +1,35 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import {HiOutlineRefresh} from 'react-icons/hi'
 import DataChart from '../Charts/DataChart'
+import AdminContext from '../../context/admin/adminContext'
+import {useParams} from 'react-router-dom'
 
 const SingleTeacher = () => {
+
+    // Use admin contex
+    const adminContext = useContext(AdminContext);
+
+    // Destructure items
+    const {teacher, students, testNotices, searchTeacher, searchStudents, searchTestsNotices} = adminContext;
+
+    // Get Teacher id from params
+    const {id} = useParams();
 
     // Icons styles
     const style = {
         color: "rgb(38, 218, 203)",
     }
+
+    useEffect(() => {
+        
+        // Get signle teacher
+        searchTeacher(id);
+        searchStudents('student');
+        searchTestsNotices();
+    }, [])
+
+    console.log(students)
 
     return (
         <SingleStyles>
@@ -19,14 +40,14 @@ const SingleTeacher = () => {
                 <div className='teacher-details'>
                     <div className="img-icon"></div>
                     <div className="details">
-                        <p><span>Full Name</span> :  Magret Nkuna</p>
-                        <p><span>Gender</span> : Female</p>
+                        <p><span>Full Name</span> :  {teacher.fname} {teacher.lname}</p>
+                        <p><span>Gender</span> : {teacher.gender}</p>
                         <p><span>Date Of Birth</span> : 05/04/1989</p>
                         <p><span>Phone Number</span> : 067 853 9874</p>
                         <p><span>Employed Since</span> : 04/05/2005</p>
-                        <p><span>Address</span> : Makotse, 56</p>
-                        <p><span>Classes</span> : Grade8, Grade10</p>
-                        <p><span>Teacher ID</span> : 302101</p>
+                        <p><span>Address</span> : {teacher.address}</p>
+                        <p><span>Classes</span> : {teacher.classes}</p>
+                        <p><span>Teacher ID</span> : {teacher.teacher_id}</p>
                         <p><span>Role</span> : Class Teacher</p>
                     </div>
                 </div>
@@ -51,21 +72,13 @@ const SingleTeacher = () => {
                     </div>
                 </div>
                 <div className="notices">
-                    <div>
-                        <p>25 February 2021</p>
-                        <p>Mathematics P2 Class Test 2</p>
-                        <p>Grade 11</p>
-                    </div>
-                    <div>
-                        <p>27 February 2021</p>
-                        <p>Physics P1</p>
-                        <p>Grade 10</p>
-                    </div>
-                    <div>
-                        <p>05 March 2021</p>
-                        <p>Mathematics </p>
-                        <p>Grade 8</p>
-                    </div>
+                    {testNotices.map(notice => {
+                        return <div key={notice.id}>
+                            <p>{notice.test_date}</p>
+                            <p>{notice.subject}</p>
+                            <p>{notice.grade}</p>
+                        </div>
+                    })}
                 </div>
             </div>
         </SingleStyles>

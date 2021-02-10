@@ -1,9 +1,30 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import DataChart from '../Charts/DataChart'
 import Search from '../Forms/Search'
+import AdminContext from '../../context/admin/adminContext'
+import {useParams} from 'react-router-dom'
 
 const SingleStudent = () => {
+
+    
+    // Use admin contex
+    const adminContext = useContext(AdminContext);
+
+    // Destructure items
+    const {student, student_marks,  searchStudent, searchStudentMarks} = adminContext;
+
+    // Get Student id from params
+    const {id} = useParams();
+
+    useEffect(() => {
+        
+        // Get signle Student
+        searchStudent(id);
+        searchStudentMarks(id)
+    }, [])
+
+    console.log(student_marks)
     return (
         <StudentStyles>
             <div className="student-profile-summary">
@@ -14,17 +35,16 @@ const SingleStudent = () => {
                     <div className='student-details'>
                         <div className="img-icon"></div>
                         <div className="details">
-                            <p><span>Full Name</span> : Karabo Mojapelo</p>
-                            <p><span>Parent Name</span> : Magret Mojapelo</p>
-                            <p><span>Gender</span> : Female</p>
+                            <p><span>Full Name</span> : {student.fname} {student.lname}</p>
+                            <p><span>Gender</span> : {student.gender}</p>
                             <p><span>Date Of Birth</span> : 28/15/2002</p>
                             <p><span>Phone Number</span> : 067 853 9874</p>
-                            <p><span>E-mail Address</span> : karabo@gmail.com</p>
+                            <p><span>E-mail Address</span> : {student.email}</p>
                             <p><span>Admission Date</span> : 07/01/2010</p>
-                            <p><span>Address</span> : Makotse, 56</p>
-                            <p><span>Classes</span> : Grade 8</p>
+                            <p><span>Address</span> : {student.address}</p>
+                            <p><span>Classes</span> : Grade {student.grade}</p>
                             <p><span>Section</span> : A</p>
-                            <p><span>Student ID</span> : 302101</p>
+                            <p><span>Student ID</span> : {student.student_id}</p>
                         </div>
                     </div>
                 </div>
@@ -65,30 +85,14 @@ const SingleStudent = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Class Test</td>
-                                <td>Sepedi</td>
-                                <td>65.00</td>
-                                <td>06/03/2021</td>
-                            </tr>
-                            <tr>
-                                <td>June Exam</td>
-                                <td>Mathematics</td>
-                                <td>70.00</td>
-                                <td>22/06/2021</td>
-                            </tr>
-                            <tr>
-                                <td>Class Test</td>
-                                <td>Life Orientaiton</td>
-                                <td>95.00</td>
-                                <td>09/08/2021</td>
-                            </tr>
-                            <tr>
-                                <td>Trial Exam</td>
-                                <td>English 1st</td>
-                                <td>80.00</td>
-                                <td>20/08/2021</td>
-                            </tr>
+                            {student_marks.map(student_mark => {
+                                return <tr key={student_mark.id}>
+                                    <td>June Exam</td>
+                                    <td>{student_mark.subject}</td>
+                                    <td>{student_mark.score}</td>
+                                    <td>06/03/2021</td>
+                                </tr>
+                            })}
                         </tbody>
                     </table>
                 </div>

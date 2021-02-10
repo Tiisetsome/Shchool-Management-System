@@ -7,6 +7,7 @@ const Students = () => {
         title="Student Id"
         heading="All Students"
         linkTo = "students"
+        query = "student"
       />
     )
 }

@@ -13,7 +13,8 @@ import TopBar from './TopBar/TopBar'
 import SingleStudent from './SinglePerson/SingleStudent';
 import SingleParent from './SinglePerson/SingleParent';
 
-const Main = () => {
+const Main = (props) => {
+    console.log(props)
     return (
         <MainStyles>
             <p>Home - <span>Admin</span></p>
@@ -28,7 +29,7 @@ const Main = () => {
                 </Route>
                 <Route path="/teachers/:id">
                     <TeacherSummary/>
-                    <SingleTeacher/>
+                    <SingleTeacher to="hello"/>
                 </Route>
                 <Route exact path="/students">
                     <TopBar icons="student"/>
@@ -36,7 +37,7 @@ const Main = () => {
                 </Route>
                 <Route path="/students/:id">
                     <TeacherSummary icons="student"/>
-                    <SingleStudent/>
+                    <SingleStudent />
                 </Route>
                 <Route exact path="/parents">
                     <TopBar icons="parents"/>

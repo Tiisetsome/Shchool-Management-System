@@ -30,7 +30,7 @@ const SideNavigation = () => {
                 <Link to='/' style={{color: "#fff"}}>
                     <li> <AiFillDashboard style={style}/> Dashboard</li>
                 </Link>
-                <Link   to='/teachers' style={{color: "#fff"}}>
+                <Link to='/teachers' style={{color: "#fff"}}>
                     <li> <GiTeacher style={style}/> Teachers</li>
                 </Link>
                 <Link to='/students' style={{color: "#fff"}}>

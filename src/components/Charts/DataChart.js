@@ -20,7 +20,6 @@ class DataChart extends React.Component{
         
     }
     render(){
-        console.log(this.props.data)
         return (
             <div className="chart" style={{margin: `${this.props.margin}`}}>
                 <Doughnut

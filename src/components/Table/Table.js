@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import {FaTrash} from 'react-icons/fa'
 import {FiEdit} from 'react-icons/fi'
@@ -8,15 +8,25 @@ import { Link } from 'react-router-dom'
 import Search from '../Forms/Search'
 import AdminContext from '../../context/admin/adminContext'
 
-const Table = ({heading, title, linkTo}) => {
+const Table = ({heading, title, linkTo, query}) => {
 
+    // Use admin context
     const adminContext = useContext(AdminContext);
 
-    // Single Page Handler
-    const singlePageHandler = (page)=>{
-        console.log(page == "teacher"? "teacher": page=="student"? "student": "parent")
-        return page == "teacher"? "teacher": page=="student"? "student": "parent"; 
-    }
+    // Destructure items
+    const {teachers, searchTeachers} = adminContext;
+
+    // Local state
+
+    useEffect(() => {
+        
+        // Search either teachers, students or parents
+         searchTeachers(query);
+    }, [query])
+
+    
+
+
     return (
         <TableStyles>
             <div className="header">
@@ -38,74 +48,25 @@ const Table = ({heading, title, linkTo}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>302101 </td>
-                        <td>
-                            <div></div>
-                        </td>
-                        <td>Magret</td>
-                        <td>Nkuna</td>
-                        <td>Female</td>
-                        <td>Grade 8, Grade 9</td>
-                        <td>45</td>
-                        <td>magret@gmail.com</td>
-                        <td>
-                            <Link to={`/${linkTo}/${1}`}><IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/></Link>
-                            <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
-                            <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>302102</td>
-                        <td>
-                            <div></div>
-                        </td>
-                        <td>James</td>
-                        <td>Ledwaba</td>
-                        <td>Male</td>
-                        <td>Grade 9</td>
-                        <td>38</td>
-                        <td>james75@gmail.com</td>
-                        <td>
-                            <IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/>
-                            <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
-                            <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>302103</td>
-                        <td>
-                            <div></div>
-                        </td>
-                        <td>Elizabeth</td>
-                        <td>Moranang</td>
-                        <td>Female</td>
-                        <td>Grade 12</td>
-                        <td>27</td>
-                        <td>elizabeth@yahoo.com</td>
-                        <td>
-                            <IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/>
-                            <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
-                            <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>302104</td>
-                        <td>
-                            <div></div>
-                        </td>
-                        <td>Katlego</td>
-                        <td>Mashego</td>
-                        <td>Male</td>
-                        <td>Grade 11</td>
-                        <td>25</td>
-                        <td>katlego@hotmail.com</td>
-                        <td>
-                            <IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/>
-                            <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
-                            <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
-                        </td>
-                    </tr>
+                    {teachers.length > 0 ? teachers.map(teacher =>{
+                        return <tr key={teacher.id}>
+                                    <td>{teacher.teacher_id? teacher.teacher_id : teacher.student_id? teacher.student_id: teacher.parent_id}</td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                    <td>{teacher.fname}</td>
+                                    <td>{teacher.lname}</td>
+                                    <td>{teacher.gender}</td>
+                                    <td>{teacher.classes}</td>
+                                    <td>{teacher.age}</td>
+                                    <td>{teacher.email}</td>
+                                    <td>
+                                        <Link to={`/${linkTo}/${teacher.teacher_id? teacher.teacher_id : teacher.student_id? teacher.student_id: teacher.parent_id}`}><IoEyeSharp style={{fontSize: "1rem", color: "grey", cursor: "pointer"}}/></Link>
+                                        <FiEdit style={{color: "rgb(38, 218, 203)", cursor: "pointer", fontSize: ".8rem"}}/>
+                                        <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".8rem"}}/>
+                                    </td>
+                              </tr>
+                    }): null}
                 </tbody>
             </table>
         </TableStyles>

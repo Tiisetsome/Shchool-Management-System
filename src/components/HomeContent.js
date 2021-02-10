@@ -1,13 +1,34 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import {HiOutlineRefresh} from 'react-icons/hi'
+import AdminContext from '../context/admin/adminContext'
 
 const HomeContent = () => {
+
+    // Use admin context
+    const adminContext = useContext(AdminContext);
+
+    // Destructure items
+    const {notices, searchNotices} = adminContext;
+
+    // Refresh notices
+    const refreshNoticesHandler = () => {
+         // Get notices
+         searchNotices();
+    }
 
     // Icons styles
     const style = {
         color: "rgb(38, 218, 203)",
+        cursor: "pointer"
     }
+
+    useEffect(() => {
+        
+        // Get notices
+        searchNotices();
+
+    }, [])
 
     return (
         <HomeContentStyles>
@@ -20,19 +41,16 @@ const HomeContent = () => {
             <div className = 'notices'>
                 <div className='header'>
                     <p>Notice Board</p>
-                    <HiOutlineRefresh style={style} />
+                    <HiOutlineRefresh style={style} onClick={()=> refreshNoticesHandler()} />
                 </div>
                 <div className="notices-wrapper">
-                    <div className="notice">
-                        <p>27 January 2021</p>
-                        <p>James Mohale <span>2min ago</span></p>
-                        <p>To all the Grade 12 learners. Please take notice that on friday is the last day to submit all the outstanding assesments.</p>
-                    </div>
-                    <div className="notice">
-                        <p>15 February 2020</p>
-                        <p>Elizabeth Legoabe <span>2min ago</span></p>
-                        <p>Due to sport competition taking place on the coming wednseday, all class activities will be put on hold for the remainder of that day.</p>
-                    </div>
+                    {notices.map(notice => {
+                        return <div className="notice" key={notice.id}>
+                            <p>{notice.created_at}</p>
+                            <p>{notice.p_fname} {notice.p_lname}</p>
+                            <p>{notice.message}</p>
+                        </div>
+                    })}
                 </div>
             </div>
         </HomeContentStyles>
