@@ -25,7 +25,7 @@ const SingleTeacher = () => {
         
         // Get signle teacher
         searchTeacher(id);
-        searchStudents('student');
+        //searchStudents('student');
         searchTestsNotices();
     }, [])
 

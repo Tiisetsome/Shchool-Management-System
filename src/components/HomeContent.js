@@ -23,13 +23,23 @@ const HomeContent = () => {
         cursor: "pointer"
     }
 
-    useEffect(() => {
-        
-        // Get notices
-        searchNotices();
-        searchTeachers('teachers');
+    // Date format
+    const formatDate = (noticeDate) => {
 
-    }, [])
+        // Get time
+        const time = noticeDate.split(" ").splice(1, 2)[0];
+        
+        // Create months array
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+        // Create new date and format it
+        let fullDate = new Date(noticeDate);
+            fullDate = `${fullDate.getDate()} ${months[fullDate.getMonth()]} ${fullDate.getFullYear()} ${time}`;
+        
+        return fullDate;
+    }
+
+    console.log('Notices rendered')
 
     return (
         <HomeContentStyles>
@@ -47,7 +57,7 @@ const HomeContent = () => {
                 <div className="notices-wrapper">
                     {notices.map(notice => {
                         return <div className="notice" key={notice.id}>
-                            <p>{notice.created_at}</p>
+                            <p>{formatDate(notice.created_at)}</p>
                             <p>{notice.p_fname} {notice.p_lname}</p>
                             <p>{notice.message}</p>
                         </div>

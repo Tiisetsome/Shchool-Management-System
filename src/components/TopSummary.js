@@ -14,7 +14,7 @@ const TopSummary = () => {
     const adminContext = useContext(AdminContext);
 
     // Destructure items
-    const {teachers, students, notices, searchTeachers, searchStudents, searchNotices} = adminContext;
+    const {teachers, students, parents, notices, searchTeachers, searchParents, searchStudents, searchNotices, searchCases} = adminContext;
 
     // Icons styles
     const style = {
@@ -28,10 +28,14 @@ const TopSummary = () => {
         
         // Get teachers
         searchTeachers('teachers');
+        searchParents('parents');
+        searchNotices();
+        searchCases();
         searchStudents('student');
-        searchNotices()
 
     }, [])
+
+    console.log('Top summary rendered')
 
     return (
         <TopSummaryStyles>
@@ -49,7 +53,7 @@ const TopSummary = () => {
                     <p>Parents</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">420</p>
+                <p className="count">{parents.length}</p>
             </div>
             <div className="cartegory-wrapper">
                 <div className="cartegory">

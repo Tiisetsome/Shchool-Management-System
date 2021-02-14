@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {Switch, Route} from 'react-router-dom';
 
@@ -12,9 +12,32 @@ import TeacherSummary from './SinglePerson/TeacherSummary'
 import TopBar from './TopBar/TopBar'
 import SingleStudent from './SinglePerson/SingleStudent';
 import SingleParent from './SinglePerson/SingleParent';
+import AdminContext from '../context/admin/adminContext'
+import StudentForm from './Forms/StudentForm';
+import TeacherForm from './Forms/TeacherForm';
+import ParentForm from './Forms/ParentForm';
 
-const Main = (props) => {
-    console.log(props)
+const Main = () => {
+
+    // Use admin context
+    const adminContext = useContext(AdminContext);
+
+    // Destructure items
+    const {teachers, students, parents} = adminContext;
+
+    // Store all grades
+    const teacherGrades = [];
+    const studentGrades = [];
+    const parentGrades = [];
+
+    if(teachers.length > 0  && students.length > 0 && teachers.length > 0){
+        teachers.forEach(teacher => teacher.classes.forEach(grade => teacherGrades.push(grade)));
+        parents.forEach(parent => parent.classes.forEach(grade => parentGrades.push(grade)));
+        students.forEach(student => studentGrades.push(student.grade));
+    }
+
+    console.log('Main rendered')
+
     return (
         <MainStyles>
             <p>Home - <span>Admin</span></p>
@@ -24,7 +47,7 @@ const Main = (props) => {
                     <HomeContent/>
                 </Route>
                 <Route exact path="/teachers">
-                    <TopBar icons="teacher" />
+                    <TopBar icons="teacher" grades= {teacherGrades} />
                     <Teachers/>
                 </Route>
                 <Route path="/teachers/:id">
@@ -32,7 +55,7 @@ const Main = (props) => {
                     <SingleTeacher to="hello"/>
                 </Route>
                 <Route exact path="/students">
-                    <TopBar icons="student"/>
+                    <TopBar icons="student" grades= {studentGrades}/>
                     <Students/>
                 </Route>
                 <Route path="/students/:id">
@@ -40,12 +63,15 @@ const Main = (props) => {
                     <SingleStudent />
                 </Route>
                 <Route exact path="/parents">
-                    <TopBar icons="parents"/>
+                    <TopBar icons="parents" grades= {parentGrades}/>
                     <Parents/>
                 </Route>
                 <Route path="/parents/:id">
                     <SingleParent/>
                 </Route>
+                <Route path="/form/student" component={StudentForm}/>
+                <Route path="/form/teacher" component={TeacherForm}/>
+                <Route path="/form/parent" component={ParentForm}/>
             </Switch>
         </MainStyles>
     )

@@ -1,7 +1,6 @@
-import React from 'react'
 import styled from 'styled-components'
 
-const Search = ({width, text}) => {
+const Search = ({width, text, onChangeHandler, onSubmitHandler, personId}) => {
 
     //Form styles
     const styles = {
@@ -11,8 +10,8 @@ const Search = ({width, text}) => {
 
     return (
         <SearchStyles>
-            <input style={width? {width: "6rem"} : null} type="text" placeholder={text}/>
-            <button style={width? styles : null} >Search</button>
+            <input style={width? {width: "6rem"} : null} type="text" placeholder={text} onChange={(e) => onChangeHandler(e)} value={personId} required/>
+            <button style={width? styles : null} type="submit" onClick = {(e) => onSubmitHandler(e)}>Search</button>
         </SearchStyles>
     )
 }

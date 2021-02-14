@@ -1,15 +1,17 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {IoDocumentTextSharp} from 'react-icons/io5'
 import {GoLaw} from 'react-icons/go'
 import {TiMessages} from 'react-icons/ti'
-import {GiTeacher} from 'react-icons/gi'
-import {IoIosPeople} from 'react-icons/io'
 import PeopleSharpIcon from '@material-ui/icons/PeopleSharp';
 import styled from 'styled-components'
+import AdminContext from '../../context/admin/adminContext'
 
 import {TopSummaryStyles} from '../Styles/TopSummaryStyles'
 
 const TeacherSummary = () => {
+
+    // Use admin context
+    const adminContext = useContext(AdminContext);
 
     // Icons styles
     const style = {
@@ -31,11 +33,10 @@ const TeacherSummary = () => {
                     <p>Upcoming Tests</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">520</p>
+                <p className="count">{adminContext.notices.length}</p>
             </div>
             <div style={students} className="cartegory-wrapper">
                 <div className="cartegory">
-                    {/* <img src="/imgs/parents.svg" alt=""/> */}
                     <PeopleSharpIcon style={style}/>
                     <p>Parents</p>
                 </div>
@@ -44,7 +45,6 @@ const TeacherSummary = () => {
             </div>
             <div style={messages} className="cartegory-wrapper">
                 <div className="cartegory">
-                    {/* <img src="/imgs/teacher.svg" alt=""/> */}
                     <TiMessages style={style}/>
                     <p>Messages</p>
                 </div>
@@ -53,12 +53,11 @@ const TeacherSummary = () => {
             </div>
             <div style={cases} className="cartegory-wrapper">
                 <div className="cartegory">
-                    {/* <img src="/imgs/event.svg" alt=""/> */}
                     <GoLaw style={{...style, fontSize: '2rem', marginBottom: '.5rem'}}/>
                     <p>Cases</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">5</p>
+                <p className="count">{adminContext.cases.length}</p>
             </div>
         </TeacherStyles>
     )

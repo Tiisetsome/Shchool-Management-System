@@ -5,7 +5,9 @@ import {
     SEARCH_STUDENT,
     SEARCH_STUDENT_MARKS,
     SEARCH_PARENTS,
+    SEARCH_PARENT,
     SEARCH_NOTICES,
+    SEARCH_CASES,
     SEARCH_TESTS
 } from '../types';
 
@@ -22,6 +24,7 @@ const AdminReducer = (state, action) => {
                 teacher: action.payload
             }
         case SEARCH_STUDENTS:
+            console.log(action.payload.data)
             return{
                 ...state,
                 students: action.payload.data
@@ -30,6 +33,17 @@ const AdminReducer = (state, action) => {
             return{
                 ...state,
                 student: action.payload
+            }
+        case SEARCH_PARENTS:
+            return{
+                ...state,
+                parents: action.payload.data
+            }
+        case SEARCH_PARENT:
+            console.log(action.payload)
+            return{
+                ...state,
+                parent: action.payload
             }
         case SEARCH_STUDENT_MARKS:
             return{
@@ -45,6 +59,11 @@ const AdminReducer = (state, action) => {
             return{
                 ...state,
                 notices: action.payload.data
+            }
+        case SEARCH_CASES:
+            return{
+                ...state,
+                cases: action.payload.data
             }
         default:
             return state

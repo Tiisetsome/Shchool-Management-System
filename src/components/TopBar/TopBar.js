@@ -1,13 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
 import PeopleSharpIcon from '@material-ui/icons/PeopleSharp';
 import GroupAddSharpIcon from '@material-ui/icons/GroupAddSharp';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import {GiTeacher} from 'react-icons/gi'
 
 import {TopSummaryStyles} from '../Styles/TopSummaryStyles'
 
-const TopBar = ({icons}) => {
+const TopBar = ({icons, grades}) => {
 
     // Icons styles
     const style = {
@@ -16,7 +14,7 @@ const TopBar = ({icons}) => {
         marginBottom: '1rem'
 
     }
-
+    
     // Render icon
     const testing = (icons)=>{
         return  icons == "teacher"? <GiTeacher style={{...style, color: "rgb(9, 95, 95)"}}/>:
@@ -24,39 +22,43 @@ const TopBar = ({icons}) => {
                 <GroupAddSharpIcon style={style}/>
     }
 
+    // Count grades
+    const gradesCount = (gradeArr, teacherGrade) => gradeArr.filter(grade => grade === teacherGrade).length;
+    
+
     return (
         <TopSummaryStyles>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     {testing(icons)}
-                    <p>Students</p>
+                    <p>Grade 8</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">520</p>
+                <p className="count">{gradesCount(grades, "Grade 8")}</p>
             </div>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     {testing(icons)}
-                    <p>Parents</p>
+                    <p>Grade 9</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">420</p>
+                <p className="count">{gradesCount(grades, "Grade 9")}</p>
             </div>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     {testing(icons)}    
-                    <p>Teachers</p>
+                    <p>Grade 10</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">18</p>
+                <p className="count">{gradesCount(grades, "Grade 10")}</p>
             </div>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     {testing(icons)}
-                    <p>Events</p>
+                    <p>Grade 11</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">5</p>
+                <p className="count">{gradesCount(grades, "Grade 11")}</p>
             </div>
         </TopSummaryStyles>
     )

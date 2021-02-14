@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import DataChart from '../Charts/DataChart'
 import Search from '../Forms/Search'
@@ -7,15 +7,34 @@ import {useParams} from 'react-router-dom'
 
 const SingleStudent = () => {
 
+    // Store person id on search
+    const [personId, setPersonId] = useState('');
     
     // Use admin contex
     const adminContext = useContext(AdminContext);
 
     // Destructure items
-    const {student, student_marks,  searchStudent, searchStudentMarks} = adminContext;
+    const {student, student_marks,  searchStudent, searchStudentMarks, getSinglePerson, setIndividuals} = adminContext;
 
     // Get Student id from params
     const {id} = useParams();
+
+     // Update state
+     const onChangeHandler = (e)=>{
+        setPersonId(e.target.value)
+    }
+
+    // Search single user
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        const person = getSinglePerson(personId);
+        
+        // Update table if passes test
+        if(person.length > 0 && typeof person[0] !== "undefined"){
+            console.log(person);
+            //setIndividuals(person)
+        }
+    }
 
     useEffect(() => {
         
@@ -41,7 +60,7 @@ const SingleStudent = () => {
                             <p><span>E-mail Address</span> : {student.email}</p>
                             <p><span>Admission Date</span> : 07/01/2010</p>
                             <p><span>Address</span> : {student.address}</p>
-                            <p><span>Classes</span> : Grade {student.grade}</p>
+                            <p><span>Classes</span> : {student.grade}</p>
                             <p><span>Section</span> : A</p>
                             <p><span>Student ID</span> : {student.student_id}</p>
                         </div>
@@ -72,6 +91,9 @@ const SingleStudent = () => {
                         <Search 
                             width
                             text = "Enter type"
+                            onChangeHandler = {onChangeHandler}
+                            onSubmitHandler = {onSubmitHandler}
+                            personId= {personId}
                         />
                     </div>
                     <table className="results-table">
