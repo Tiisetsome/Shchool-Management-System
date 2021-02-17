@@ -5,6 +5,7 @@ import AdminReducer from './adminReducer';
 import {
     SEARCH_TEACHER,
     SEARCH_TEACHERS,
+    ADD_PERSON,
     SEARCH_STUDENTS,
     SEARCH_STUDENT,
     SEARCH_STUDENT_MARKS,
@@ -26,7 +27,10 @@ const AdminState = props => {
         cases: [],
         teacher: {},
         student: {},
-        parent: {}
+        parent: {},
+        addStatus: {status: false},
+        loading: true,
+        authenticated: true,
     }
 
     const [state, dispatch] = useReducer(AdminReducer, initialState);
@@ -57,6 +61,28 @@ const AdminState = props => {
             type: SEARCH_TEACHER,
             payload: teacher
         })
+    }
+
+    // Add New Teacher
+    const addPerson = async (details, query) => {
+        const res = await axios.post(`http://localhost:4430/sandbox/student-management-system/api/${query}/create.php`, {
+            ...details
+        })
+
+        console.log(res.data)
+
+        dispatch({
+            type: ADD_PERSON,
+            payload: {...res.data}
+        })
+
+        // Reset the status after sometime
+        setTimeout(() => {
+            dispatch({
+                type: ADD_PERSON,
+                payload: {status: false}
+            })
+        }, 5000);
     }
 
     // Get Parents
@@ -213,8 +239,12 @@ const AdminState = props => {
             notices: state.notices,
             testNotices: state.testNotices,
             cases: state.cases,
+            addStatus: state.addStatus,
+            loading: state.loading,
+            authenticated: state.authenticated,
             searchTeachers,
             searchTeacher,
+            addPerson,
             searchStudents,
             searchStudent,
             searchStudentMarks,

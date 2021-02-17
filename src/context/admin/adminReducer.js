@@ -1,6 +1,7 @@
 import {
     SEARCH_TEACHER,
     SEARCH_TEACHERS,
+    ADD_PERSON,
     SEARCH_STUDENTS,
     SEARCH_STUDENT,
     SEARCH_STUDENT_MARKS,
@@ -16,18 +17,24 @@ const AdminReducer = (state, action) => {
         case SEARCH_TEACHERS:
             return{
                 ...state,
-                teachers: action.payload.data
+                teachers: action.payload.data,
+                loading: false,
             }
         case SEARCH_TEACHER:
             return{
                 ...state,
                 teacher: action.payload
             }
-        case SEARCH_STUDENTS:
-            console.log(action.payload.data)
+        case ADD_PERSON:
             return{
                 ...state,
-                students: action.payload.data
+                addStatus: action.payload
+            }
+        case SEARCH_STUDENTS:
+            return{
+                ...state,
+                students: action.payload.data,
+                loading: false,
             }
         case SEARCH_STUDENT:
             return{
@@ -37,7 +44,8 @@ const AdminReducer = (state, action) => {
         case SEARCH_PARENTS:
             return{
                 ...state,
-                parents: action.payload.data
+                parents: action.payload.data,
+                loading: false,
             }
         case SEARCH_PARENT:
             console.log(action.payload)
@@ -53,12 +61,14 @@ const AdminReducer = (state, action) => {
         case SEARCH_TESTS:
             return{
                 ...state,
-                testNotices: action.payload.data
+                testNotices: action.payload.data,
+                loading: false,
             }
         case SEARCH_NOTICES:
             return{
                 ...state,
-                notices: action.payload.data
+                notices: action.payload.data,
+                loading: false,
             }
         case SEARCH_CASES:
             return{

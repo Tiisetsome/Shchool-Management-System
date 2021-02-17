@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const TopSummaryStyles = styled.section`
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: ${(props) => (props.grades? 'repeat(5, 1fr)' : 'repeat(4, 1fr)')};
         grid-gap: 1rem;
         margin-bottom: 1rem;
 

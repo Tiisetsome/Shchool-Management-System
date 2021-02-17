@@ -30,7 +30,7 @@ const Main = () => {
     const studentGrades = [];
     const parentGrades = [];
 
-    if(teachers.length > 0  && students.length > 0 && teachers.length > 0){
+    if(teachers.length > 0  || students.length > 0 || parents.length > 0){
         teachers.forEach(teacher => teacher.classes.forEach(grade => teacherGrades.push(grade)));
         parents.forEach(parent => parent.classes.forEach(grade => parentGrades.push(grade)));
         students.forEach(student => studentGrades.push(student.grade));

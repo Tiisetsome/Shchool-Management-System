@@ -60,7 +60,7 @@ const Table = ({heading, title, linkTo, query, persons}) => {
         // Return results after removing the person
          deletePerson(id, query);
 
-         if(query === "teachers" || query === "student"){
+         if(query === "teachers" || query === "student" || query === "parents"){
             setIndividuals(individuals.filter(person => id !== person.id));
             console.log(id)
         }

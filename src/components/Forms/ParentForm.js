@@ -1,7 +1,56 @@
-import React from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import {FormStyles} from '../Styles/FormStyles'
+import AdminContext from '../../context/admin/adminContext'
 
 const ParentForm = () => {
+    
+    // Use admin contxt
+    const adminContext = useContext(AdminContext);
+
+    // Destrcuture items
+    const {addPerson, addStatus}  = adminContext
+
+    // Form state
+    const [fields, setFields] = useState({
+        fname: '',
+        lname: '',
+        gender: 'male',
+        age: '',
+        classes: 'Grade 8',
+        sections: '',
+        email: '',
+        phone: '',
+        address: ''
+    })
+
+    // Handle change
+    const changeHandler = (e, input) => {
+        setFields({
+            ...fields,
+            [input]: e.target.value
+        })
+    }
+
+    // Handle form submit
+    const submitHandler = (e) => {
+        e.preventDefault();
+        addPerson(fields, 'parents');
+
+        // Empty form fields
+        setFields({
+            fname: '',
+            lname: '',
+            gender: 'male',
+            age: '',
+            classes: 'Grade 8',
+            sections: '',
+            email: '',
+            phone: '',
+            address: ''
+        })
+        
+    }
+
     return (
         <FormStyles>
             <div className='header'>
@@ -9,49 +58,53 @@ const ParentForm = () => {
             </div>
             <form>
                 <div>
-                    <lable>First Name :</lable>
-                    <input type="text" name = "fname"/>
+                    <label>First Name :</label>
+                    <input type="text" name = "fname" onChange={(e)=>changeHandler(e,'fname')} value={fields.fname}/>
                 </div>
                 <div>
-                    <lable>Last Name :</lable>
-                    <input type="text" name = "lname"/>
+                    <label>Last Name :</label>
+                    <input type="text" name = "lname" onChange={(e)=>changeHandler(e,'lname')} value={fields.lname}/>
                 </div>
                 <div>
-                    <lable>Gender :</lable>
-                    <select name = "gender" value = "Gender">
+                    <label>Gender :</label>
+                    <select name = "gender" onChange={(e)=>changeHandler(e,'gender')} defaultValue={'male'}>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
                 <div>
-                    <lable>Date Of Birth :</lable>
-                    <input type="date" name = "age"/>
+                    <label>Date Of Birth :</label>
+                    <input type="date" name = "age" onChange={(e)=>changeHandler(e,'age')} value={fields.age}/>
                 </div>
                 <div>
-                    <lable>Classes :</lable>
-                    <select name = "classes">
+                    <label>Classes :</label>
+                    <select name = "classes" onChange={(e)=>changeHandler(e,'classes')} defaultValue={"Grade 8"} value={fields.classes}>
                         <option value="Grade 8">Grade 8</option>
                         <option value="Grade 9">Grade 9</option>
+                        <option value="Grade 10">Grade 10</option>
+                        <option value="Grade 11">Grade 11</option>
+                        <option value="Grade 12">Grade 12</option>
                     </select>
                 </div>
                 <div>
-                    <lable>Section :</lable>
-                    <input type="text" name = "sections"/>
+                    <label>Section :</label>
+                    <input type="text" name = "sections" onChange={(e)=>changeHandler(e,'sections')} value={fields.sections}/>
                 </div>
                 <div>
-                    <lable>E-Mail :</lable>
-                    <input type="text" name = "email"/>
+                    <label>E-Mail :</label>
+                    <input type="text" name = "email" onChange={(e)=>changeHandler(e,'email')} value={fields.email}/>
                 </div>
                 <div>
-                    <lable>Phone  :</lable>
-                    <input type="text" name = "lname"/>
+                    <label>Phone  :</label>
+                    <input type="text" name = "phone" onChange={(e)=>changeHandler(e,'phone')} value={fields.phone}/>
                 </div>
                 <div>
-                    <lable>Address :</lable>
-                    <textarea type="text" name = "address"></textarea>
+                    <label>Address :</label>
+                    <textarea type="text" name = "address" onChange={(e)=>changeHandler(e,'address')} value={fields.address}></textarea>
                 </div>
-                <button>Submit</button>
+                <button onClick = {(e)=>submitHandler(e)}>Submit</button>
             </form>
+            {addStatus.status? <div className = "notice">{addStatus.message}</div> : null}
         </FormStyles>
     )
 }

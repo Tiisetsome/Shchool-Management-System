@@ -24,10 +24,12 @@ const TopBar = ({icons, grades}) => {
 
     // Count grades
     const gradesCount = (gradeArr, teacherGrade) => gradeArr.filter(grade => grade === teacherGrade).length;
+    console.log(gradesCount(grades, "Grade 8"));
+    console.log(grades);
     
 
     return (
-        <TopSummaryStyles>
+        <TopSummaryStyles grades>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     {testing(icons)}
@@ -59,6 +61,14 @@ const TopBar = ({icons, grades}) => {
                 </div>
                 <div className="line"></div>
                 <p className="count">{gradesCount(grades, "Grade 11")}</p>
+            </div>
+            <div className="cartegory-wrapper">
+                <div className="cartegory">
+                    {testing(icons)}
+                    <p>Grade 12</p>
+                </div>
+                <div className="line"></div>
+                <p className="count">{gradesCount(grades, "Grade 12")}</p>
             </div>
         </TopSummaryStyles>
     )

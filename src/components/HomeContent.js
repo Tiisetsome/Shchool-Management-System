@@ -1,7 +1,8 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, Fragment} from 'react'
 import styled from 'styled-components'
 import {HiOutlineRefresh} from 'react-icons/hi'
 import AdminContext from '../context/admin/adminContext'
+import Spinner from './Spinner/Spinner'
 
 const HomeContent = () => {
 
@@ -9,7 +10,7 @@ const HomeContent = () => {
     const adminContext = useContext(AdminContext);
 
     // Destructure items
-    const {notices, teachers, searchTeachers, searchNotices} = adminContext;
+    const {notices, teachers, searchTeachers, searchNotices, loading} = adminContext;
 
     // Refresh notices
     const refreshNoticesHandler = () => {
@@ -43,27 +44,29 @@ const HomeContent = () => {
 
     return (
         <HomeContentStyles>
-            <div className='calender'>
-                <div className='header'>
-                    <p>Event Calender</p>
-                    <HiOutlineRefresh style={style} />
+            {loading? <Spinner/> : <Fragment>
+                <div className='calender'>
+                    <div className='header'>
+                        <p>Event Calender</p>
+                        <HiOutlineRefresh style={style} />
+                    </div>
                 </div>
-            </div>
-            <div className = 'notices'>
-                <div className='header'>
-                    <p>Notice Board</p>
-                    <HiOutlineRefresh style={style} onClick={()=> refreshNoticesHandler()} />
+                <div className = 'notices'>
+                    <div className='header'>
+                        <p>Notice Board</p>
+                        <HiOutlineRefresh style={style} onClick={()=> refreshNoticesHandler()} />
+                    </div>
+                    <div className="notices-wrapper">
+                        {notices.map(notice => {
+                            return <div className="notice" key={notice.id}>
+                                <p>{formatDate(notice.created_at)}</p>
+                                <p>{notice.p_fname} {notice.p_lname}</p>
+                                <p>{notice.message}</p>
+                            </div>
+                        })}
+                    </div>
                 </div>
-                <div className="notices-wrapper">
-                    {notices.map(notice => {
-                        return <div className="notice" key={notice.id}>
-                            <p>{formatDate(notice.created_at)}</p>
-                            <p>{notice.p_fname} {notice.p_lname}</p>
-                            <p>{notice.message}</p>
-                        </div>
-                    })}
-                </div>
-            </div>
+            </Fragment> }
         </HomeContentStyles>
     )
 }
@@ -73,6 +76,7 @@ const HomeContentStyles = styled.section`
     grid-template-columns: 1.8fr 1fr;
     gap: 1rem;
     margin-bottom: 3rem;
+    position: relative;
 
     p{
         margin-bottom: 0rem;

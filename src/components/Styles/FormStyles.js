@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const FormStyles = styled.section`
     background: #fff;
     font-family: Montserrat-Medium;
+    position: relative;
 
     .header{
         padding: 2rem;
@@ -29,7 +30,7 @@ export const FormStyles = styled.section`
 
         div{
 
-            lable{
+            label{
                 display: block;
                 margin-bottom: 1rem;
                 font-size: .8rem;
@@ -69,6 +70,20 @@ export const FormStyles = styled.section`
             font-family: Montserrat-Medium;
             color: #fff;
             background: rgb(9, 95, 95);
+            cursor: pointer;
         }
+    }
+
+    .notice{
+        top: .5rem;
+        right: 2rem;
+        width: 15rem;
+        border-left: rgb(40, 206, 123) 5px solid;
+        border-radius: 5px;
+        padding: 1rem;
+        position: fixed;
+        font-size: .7rem;
+        z-index: 100;
+        background: rgb(208, 238, 223);
     }
 `

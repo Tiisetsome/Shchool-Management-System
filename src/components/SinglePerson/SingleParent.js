@@ -38,7 +38,7 @@ const SingleParent = () => {
                             <p><span>Address</span> : {parent.address}</p>
                             <p><span>Classes</span> : {typeof parent.classes !== 'undefined' ? parent.classes.join(', ') : null}</p>
                             <p><span>Section</span> : A</p>
-                            <p><span>Student ID</span> : 302101</p>
+                            <p><span>Parent ID</span> : {parent.parent_id}</p>
                         </div>
                     </div>
                 </div>
