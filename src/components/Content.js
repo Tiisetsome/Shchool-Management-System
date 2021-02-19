@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {withRouter} from 'react-router-dom'
 
 import SideNavigation from './SideNavigation'
 import Main from './Main'
@@ -20,4 +21,4 @@ const ContentStyles = styled.div`
     margin-right: 2rem;
 `;
 
-export default Content
+export default withRouter(Content);

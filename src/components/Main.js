@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styled from 'styled-components'
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, withRouter} from 'react-router-dom';
 
 import TopSummary from './TopSummary'
 import HomeContent from './HomeContent'
@@ -16,6 +16,7 @@ import AdminContext from '../context/admin/adminContext'
 import StudentForm from './Forms/StudentForm';
 import TeacherForm from './Forms/TeacherForm';
 import ParentForm from './Forms/ParentForm';
+import Protected from './Protected/Protected'
 
 const Main = () => {
 
@@ -40,9 +41,9 @@ const Main = () => {
 
     return (
         <MainStyles>
-            <p>Home - <span>Admin</span></p>
+            <p className="p-header">Home - <span>Admin</span></p>
             <Switch>
-                <Route exact path="/">
+                <Route exact path="/testing">
                     <TopSummary/>
                     <HomeContent/>
                 </Route>

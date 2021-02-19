@@ -4,10 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom';
+import AdminState from './context/admin/AdminState';
 
 ReactDOM.render(
     <Router>
-      <App />
+      <AdminState>
+        <App />
+      </AdminState>
     </Router>,
   document.getElementById('root')
 );
