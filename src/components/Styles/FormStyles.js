@@ -4,6 +4,11 @@ export const FormStyles = styled.section`
     background: #fff;
     font-family: Montserrat-Medium;
     position: relative;
+ 
+    .p-header{
+        padding: 4rem 0rem 2rem 0rem;
+        margin-bottom: 0rem;
+    }
 
     .header{
         padding: 2rem;

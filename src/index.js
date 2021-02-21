@@ -5,11 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom';
 import AdminState from './context/admin/AdminState';
+import StudentState from './context/students/StudentState'
 
 ReactDOM.render(
     <Router>
       <AdminState>
-        <App />
+        <StudentState>
+          <App />
+        </StudentState>
       </AdminState>
     </Router>,
   document.getElementById('root')

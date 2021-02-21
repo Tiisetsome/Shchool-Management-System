@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
-import DataChart from '../Charts/DataChart'
 import Search from '../Forms/Search'
 import AdminContext from '../../context/admin/adminContext'
 import {useParams} from 'react-router-dom'
+import StudentAttandace from '../StudentAttandace/StudentAttandace'
+import TestResults from '../Table/TestResults'
 
 const SingleStudent = () => {
 
@@ -96,7 +97,8 @@ const SingleStudent = () => {
                             personId= {personId}
                         />
                     </div>
-                    <table className="results-table">
+                    <TestResults student_marks = {student_marks}/>
+                    {/* <table className="results-table">
                         <thead>
                             <tr>
                                 <th>Test Type</th>
@@ -115,22 +117,10 @@ const SingleStudent = () => {
                                 </tr>
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
             </div>
-            <div className="attandance">
-                <div>
-                    <p>Class Attandance Record</p>
-                    <p>Year 2020</p>
-                </div>
-                <div className="chart">
-                    <DataChart
-                         margin="0rem"
-                         labels={['Present', 'Absent']}
-                         data = {[30, 2, 0]}
-                    />
-                </div>
-            </div>
+            <StudentAttandace/>
         </StudentStyles>
     )
 }
@@ -229,87 +219,6 @@ const StudentStyles = styled.section`
         .results-summary{
             grid-area: results;
             background: #fff;
-
-            .results-table{
-                border-collapse: collapse;
-                font-size: .7rem;
-                width: 100%;
-                font-family: Montserrat-Regular;
-                margin-bottom: 0rem;
-                
-                thead tr{
-                    text-align: left;
-                    border-bottom: 1px solid rgb(220, 220, 220);
-                    
-                    th{
-                        padding: 1rem 1rem;
-                        font-weight: 600;
-                        margin-right: 2rem;
-                    }
-                }
-
-                tbody tr{
-
-
-                    td{
-                        padding: 1rem 1rem;
-                        margin-right: 2rem;
-    
-                        div{
-                            width: 2rem;
-                            height: 2rem;
-                            background: pink;
-                            border-radius: 100%;
-                        }
-    
-                    }
-    
-                    td:last-child{
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        width: 6rem;
-                    }
-                }
-
-                tbody tr:nth-child(odd){
-                    background-color:  rgb(238, 201, 120);
-                }
-                tbody tr:nth-child(even){
-                    background-color: rgb(99, 243, 207);
-                }
-            }
-        }
-    }
-
-    .attandance{
-        margin: 1rem 0rem;
-        padding: 4rem 0rem;
-        background-image: linear-gradient(rgb(245, 71, 115), rgb(153, 8, 44));
-        display: grid;
-        align-items: center;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-
-        div:first-child{
-            p{
-                padding-left: 1rem;
-                font-weight: 500;
-                font-family: Montserrat-Medium;
-                color: #fff;
-            }
-
-            p:first-child{
-                font-size: 1.3rem;
-                margin-bottom: 1rem;
-            }
-
-            p:last-child{
-                font-size: 3rem;
-                font-weight: 600;
-                margin-bottom: 0rem;
-                letter-spacing: .5rem;
-            }
         }
     }
 `;

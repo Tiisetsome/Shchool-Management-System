@@ -56,6 +56,7 @@ const Table = ({heading, title, linkTo, query, persons}) => {
 
     // Remove person
     const removePerson = (id, query) => {
+        console.log(id)
         
         // Return results after removing the person
          deletePerson(id, query);

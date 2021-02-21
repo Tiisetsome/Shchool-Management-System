@@ -6,7 +6,7 @@ const Spinner = () => {
         <SpinnerStyles>
          <h3>Fetching Data</h3>
          <p>Please wait...</p>
-         <div class="lds-ellipsis">
+         <div className="lds-ellipsis">
              <div></div>
              <div></div>
              <div></div>

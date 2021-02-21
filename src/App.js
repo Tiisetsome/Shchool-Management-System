@@ -1,133 +1,141 @@
-import React, {useContext, Fragment} from 'react'
-import {Switch, Route} from 'react-router-dom';
-import styled from 'styled-components'
-import AdminContext from './context/admin/adminContext'
+import React, {useState} from 'react'
+import {Switch, Route, useHistory} from 'react-router-dom';
+import axios from 'axios'
 
 import './App.css';
-//import Content from './components/Content';
 import Navigation from './components/Navigation';
 import Protected from './components/Protected/Protected';
-import SideNavigation from './components/SideNavigation'
-import Main from './components/Main';
-
-import TopSummary from './components/TopSummary'
-import HomeContent from './components/HomeContent'
-import Teachers from './components/Teachers/Teachers';
-import Students from './components/Students/Students';
-import Parents from './components/Parents/Parents';
-import SingleTeacher from './components/SinglePerson/SingleTeacher'
-import TeacherSummary from './components/SinglePerson/TeacherSummary'
-import TopBar from './components/TopBar/TopBar'
-import SingleStudent from './components/SinglePerson/SingleStudent';
-import SingleParent from './components/SinglePerson/SingleParent';
-//import AdminContext from '../context/admin/adminContext'
 import StudentForm from './components/Forms/StudentForm';
 import TeacherForm from './components/Forms/TeacherForm';
 import ParentForm from './components/Forms/ParentForm';
-//import Protected from './components/Protected/Protected'
+import Login from './pages/Login'
+import Home from './pages/Home';
+import TeachersPage from './pages/TeachersPage';
+import StudentsPage from './pages/StudentsPage';
+import ParentsPage from './pages/ParentsPage';
+import ParentProfile from './pages/single/ParentProfile';
+import TeacherProfile from './pages/single/TeacherProfile';
+import StudentProfile from './pages/single/StudentProfile';
+import StudentPage from './pages/students/StudentPage';
 
 const App = () => {
 
-    // Use admin context
-    const adminContext = useContext(AdminContext);
+  const history = useHistory()
 
-    // Destructure items
-    const {teachers, students, parents} = adminContext;
+  // Authentication state
+  const [isAuth, setIsAuth] = useState(false)
+  const [sdnAuth, setSdnAuth] = useState(false)
 
-    // Store all grades
-    const teacherGrades = [];
-    const studentGrades = [];
-    const parentGrades = [];
+  // Login state
+  const [credentials, setCredentials] = useState({
+      person_id: '',
+      pwd: ''
+  })
 
-    if(teachers.length > 0  || students.length > 0 || parents.length > 0){
-        teachers.forEach(teacher => teacher.classes.forEach(grade => teacherGrades.push(grade)));
-        parents.forEach(parent => parent.classes.forEach(grade => parentGrades.push(grade)));
-        students.forEach(student => studentGrades.push(student.grade));
-    }
+  // Signup state
+  const [signup, setSignup] = useState({
+      person_id: '',
+      pwd: '',
+      pwd_confirm: ''
+  })
+    
+  // Backdrop state
+  const [backdrop, setBackdrop] = useState(false);
+
+  // Login Input change handler
+  const changeHandler = (e, input) => {
+    setCredentials({
+        ...credentials,
+        [input]: e.target.value
+    })
+  }
+
+  // Signup Input change handler
+  const signupChangeHandler = (e, input) => {
+    setSignup({
+        ...signup,
+        [input]: e.target.value
+    })
+  }
+
+
+  // Login Form submit handler
+  const submitHandler = async (e) => {
+      e.preventDefault();
+
+      const res = await axios.post('http://localhost:4430/sandbox/student-management-system/api/auth/signIn.php', credentials
+      )
+
+      if(res.data.isAuth && res.data.person == 'teacher'){
+        setIsAuth(true);
+        history.push('/');
+      }else if(res.data.isAuth && res.data.person == 'student'){
+        setSdnAuth(true);
+        history.push('/student_profile');
+      }else{
+        setIsAuth(false);
+      }
+  }
+
+   // Login Form submit handler
+   const signupSubmitHandler = async (e) => {
+      e.preventDefault();
+
+      const res = await axios.post('http://localhost:4430/sandbox/student-management-system/api/auth/signUp.php', signup
+      )
+      console.log(res.data)
+
+      if(res.data.updated){
+        setBackdrop(false);
+        setCredentials({
+          ...credentials,
+          person_id: signup.person_id,
+        })
+        setSignup({
+          person_id: '',
+          pwd: '',
+          pwd_confirm: ''
+        })
+      }
+  }
+
+  // Log out method
+  const logoutHandler = () => {
+
+    // Kill session
+    setIsAuth(false);
+    setSdnAuth(false);
+  }
 
   return (
       <>
-         <Navigation/>
-         <ContentStyles>
-            <SideNavigation/>
-            <Switch>
-                  <Route exact path="/">
-                    <div>
-                        <p className="p-header">Home - <span>Admin</span></p>
-                        <TopSummary/>
-                        <HomeContent/>
-                    </div>
-                  </Route>
-                  <Route exact path="/teachers">
-                      <div>
-                        <p className="p-header">Home - <span>Teachers</span></p>
-                        <TopBar icons="teacher" grades= {teacherGrades} />
-                        <Teachers/>
-                      </div>
-
-                  </Route>
-                  <Route path="/teachers/:id">
-                    <div>
-                        <p className="p-header">Home - <span>Teachers</span></p>
-                        <TeacherSummary/>
-                        <SingleTeacher to="hello"/>
-                    </div>
-                  </Route>
-                  <Route exact path="/students">
-                      <div>
-                        <p className="p-header">Home - <span>Students</span></p>
-                        <TopBar icons="student" grades= {studentGrades}/>
-                        <Students/>
-                      </div>
-                  </Route>
-                  <Route path="/students/:id">
-                      <div>
-                        <p className="p-header">Home - <span>Students</span></p>
-                        <TeacherSummary icons="student"/>
-                        <SingleStudent />
-                      </div>
-                  </Route>
-                  <Route exact path="/parents">
-                      <div>
-                        <p className="p-header">Home - <span>Parents</span></p>
-                        <TopBar icons="parents" grades= {parentGrades}/>
-                        <Parents/>
-                      </div>
-                  </Route>
-                  <Route path="/parents/:id">
-                      <div>
-                        <p className="p-header">Home - <span>Parent</span></p>
-                        <SingleParent/>
-                      </div>
-                  </Route>
-                  <Route path="/form/student" component={StudentForm}/>
-                  <Route path="/form/teacher" component={TeacherForm}/>
-                  <Route path="/form/parent" component={ParentForm}/>
-            </Switch>
-        </ContentStyles>
+        <Navigation isAuth={isAuth} logoutHandler = {logoutHandler}/>
+        <Switch>
+            <Route path='/login'>
+              <Login changeHandler={changeHandler}
+                     signupChangeHandler = {signupChangeHandler}
+                     submitHandler={submitHandler}
+                     signupSubmitHandler = {signupSubmitHandler}
+                     credentials={credentials}
+                     signup = {signup}
+                     backdrop= {backdrop}
+                     setBackdrop = {setBackdrop}
+              />
+            </Route>
+            <Protected exact path="/" component={Home} isAuth={isAuth}/>
+            <Protected exact path="/teachers" component={TeachersPage} isAuth={isAuth}/>
+            <Protected exact path="/teachers/:id" component={TeacherProfile} isAuth={isAuth}/>
+            <Protected exact path="/students" component={StudentsPage} isAuth={isAuth}/>
+            <Protected exact path="/students/:id" component={StudentProfile} isAuth={isAuth}/>
+            <Protected exact path="/parents" component={ParentsPage} isAuth={isAuth}/>
+            <Protected exact path="/parents/:id" component={ParentProfile} isAuth={isAuth}/>
+            <Protected exact path="/form/student" component={StudentForm} isAuth={isAuth}/>
+            <Protected exact path="/form/teacher" component={TeacherForm} isAuth={isAuth}/>
+            <Protected exact path="/form/parent" component={ParentForm} isAuth={isAuth}/>
+            <Protected exact path="/student_profile" component={StudentPage} isAuth={sdnAuth}/>
+         </Switch>
       </>
   );
 }
-
-const ContentStyles = styled.main`
-    width: 100%;
-    display: grid;
-    grid-template-columns: 20% 1fr;
-    grid-gap: 2rem; 
-    margin-right: 2rem;
-
-    p{
-      color: grey;
-      font-size: .8rem;
-
-      span{
-          color: rgb(233, 140, 0);
-      }
-    }
-
-    .p-header {
-      padding-top: 3.5rem;
-    }
-`;
 
 export default App;
