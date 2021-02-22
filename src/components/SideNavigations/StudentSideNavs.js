@@ -25,13 +25,13 @@ const StudentSideNavs = () => {
     return (
         <SideStyles>
             <ul>
-                <Link to='/student_profile' style={{color: "#fff"}}>
+                <Link to='/student_dashboard' style={{color: "#fff"}}>
                     <li> <AiFillDashboard style={style}/> Dashboard</li>
                 </Link>
-                <Link to='/teachers' style={{color: "#fff"}}>
+                <Link to='/student_dashboard/profile' style={{color: "#fff"}}>
                     <li> <GiTeacher style={style}/> My Profile</li>
                 </Link>
-                <Link to='/students' style={{color: "#fff"}}>
+                <Link to='/student_dashboard/events' style={{color: "#fff"}}>
                     <li> <PeopleSharpIcon style={style}/> Events</li>
                 </Link>
                 <Link to='/parents' style={{color: "#fff"}}>

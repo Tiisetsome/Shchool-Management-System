@@ -5,6 +5,7 @@ import AdminContext from '../../context/admin/adminContext'
 import {useParams} from 'react-router-dom'
 import StudentAttandace from '../StudentAttandace/StudentAttandace'
 import TestResults from '../Table/TestResults'
+import MissedTests from '../MissedTests/MissedTests'
 
 const SingleStudent = () => {
 
@@ -67,25 +68,7 @@ const SingleStudent = () => {
                         </div>
                     </div>
                 </div>
-                <div className='missed-test-summary'>
-                    <div className='header'>
-                        <p>Missed Tests</p>
-                    </div>
-                    <div className="tests">
-                        <div>
-                            <p>12 March 2021</p>
-                            <p>Life Orientation</p>
-                            <p>The student was sick and notified the teacher before hand</p>
-                            <p>Reason</p>
-                        </div>
-                        <div>
-                            <p>25 June 2021</p>
-                            <p>Mathematics</p>
-                            <p>No valid reason</p>
-                            <p>Reason</p>
-                        </div>
-                    </div>
-                </div>
+                <MissedTests/>
                 <div className="results-summary">
                     <div className='header'>
                         <p>All Tests</p>
@@ -98,26 +81,6 @@ const SingleStudent = () => {
                         />
                     </div>
                     <TestResults student_marks = {student_marks}/>
-                    {/* <table className="results-table">
-                        <thead>
-                            <tr>
-                                <th>Test Type</th>
-                                <th>Subject</th>
-                                <th>Marks</th>
-                                <th>Date</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {student_marks.map(student_mark => {
-                                return <tr key={student_mark.id}>
-                                    <td>June Exam</td>
-                                    <td>{student_mark.subject}</td>
-                                    <td>{student_mark.score}</td>
-                                    <td>06/03/2021</td>
-                                </tr>
-                            })}
-                        </tbody>
-                    </table> */}
                 </div>
             </div>
             <StudentAttandace/>
@@ -185,35 +148,6 @@ const StudentStyles = styled.section`
                 }
             }
 
-        }
-
-        .missed-test-summary{
-            grid-area: missed-test;
-            background: #fff;
-
-            .tests{
-                div{
-                    margin: 2rem 1rem 1rem 1rem;
-
-                    p{
-                        margin-bottom: .8rem;
-                    }
-
-                    p:first-child{
-                        color: rgb(182, 0, 0);
-                        font-weight: 600;
-                    }
-
-                    p:nth-child(2){
-                        font-weight: 600;
-                        color: rgb(38, 218, 203);
-                    }
-
-                    p:last-child{
-                        color: rgb(214, 214, 214);;
-                    }
-                }
-            }
         }
 
         .results-summary{

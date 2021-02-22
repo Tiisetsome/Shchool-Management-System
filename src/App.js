@@ -17,6 +17,9 @@ import ParentProfile from './pages/single/ParentProfile';
 import TeacherProfile from './pages/single/TeacherProfile';
 import StudentProfile from './pages/single/StudentProfile';
 import StudentPage from './pages/students/StudentPage';
+import SchoolEvents from './pages/students/SchoolEvents';
+import StudentMyProfile from './pages/students/StudentMyProfile';
+import StudentAssessment from './pages/students/StudentAssessment';
 
 const App = () => {
 
@@ -71,7 +74,7 @@ const App = () => {
         history.push('/');
       }else if(res.data.isAuth && res.data.person == 'student'){
         setSdnAuth(true);
-        history.push('/student_profile');
+        history.push('/student_dashboard');
       }else{
         setIsAuth(false);
       }
@@ -132,7 +135,10 @@ const App = () => {
             <Protected exact path="/form/student" component={StudentForm} isAuth={isAuth}/>
             <Protected exact path="/form/teacher" component={TeacherForm} isAuth={isAuth}/>
             <Protected exact path="/form/parent" component={ParentForm} isAuth={isAuth}/>
-            <Protected exact path="/student_profile" component={StudentPage} isAuth={sdnAuth}/>
+            <Protected exact path="/student_dashboard" component={StudentPage} isAuth={sdnAuth}/>
+            <Protected exact path="/student_dashboard/profile" component={StudentMyProfile} isAuth={sdnAuth}/>
+            <Protected exact path="/student_dashboard/events" component={SchoolEvents} isAuth={sdnAuth}/>
+            <Protected exact path="/student_dashboard/assessment" component={StudentAssessment} isAuth={sdnAuth}/>
          </Switch>
       </>
   );
