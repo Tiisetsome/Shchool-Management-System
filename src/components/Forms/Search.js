@@ -43,6 +43,16 @@ const SearchStyles = styled.form`
     button:hover{
         background-color: rgb(38, 218, 203);
     }
+
+    @media screen and (max-width: 500px){
+        input, button{
+            width: 6rem;
+            padding: .3rem;
+            border-radius: 1rem;
+            border: none;
+            font-size: .6rem;
+        }
+    }
 `;
 
 export default Search

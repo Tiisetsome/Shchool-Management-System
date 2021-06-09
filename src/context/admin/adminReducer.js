@@ -8,8 +8,20 @@ import {
     SEARCH_PARENTS,
     SEARCH_PARENT,
     SEARCH_NOTICES,
+    ADD_NOTICE,
     SEARCH_CASES,
-    SEARCH_TESTS
+    SEARCH_TEST_NOTICES,
+    SEARCH_MISSED_TESTS,
+    SEARCH_EVENTS,
+    RESET_STATE,
+    ADD_TEST_NOTICE,
+    ADD_STUDENT_CASE,
+    ADD_EVENT,
+    ADD_STUDENT_MARKS,
+    ADD_ASSESSMENT,
+    UPDATE_PERSON,
+    STOP_SPINNER,
+    ADD_MISSED_TEST
 } from '../types';
 
 const AdminReducer = (state, action) => {
@@ -18,7 +30,6 @@ const AdminReducer = (state, action) => {
             return{
                 ...state,
                 teachers: action.payload.data,
-                loading: false,
             }
         case SEARCH_TEACHER:
             return{
@@ -30,11 +41,15 @@ const AdminReducer = (state, action) => {
                 ...state,
                 addStatus: action.payload
             }
+        case UPDATE_PERSON:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
         case SEARCH_STUDENTS:
             return{
                 ...state,
                 students: action.payload.data,
-                loading: false,
             }
         case SEARCH_STUDENT:
             return{
@@ -45,7 +60,6 @@ const AdminReducer = (state, action) => {
             return{
                 ...state,
                 parents: action.payload.data,
-                loading: false,
             }
         case SEARCH_PARENT:
             console.log(action.payload)
@@ -58,22 +72,88 @@ const AdminReducer = (state, action) => {
                 ...state,
                 student_marks: action.payload
             }
-        case SEARCH_TESTS:
+        case SEARCH_TEST_NOTICES:
             return{
                 ...state,
                 testNotices: action.payload.data,
-                loading: false,
             }
+        case SEARCH_MISSED_TESTS:
+            return{
+                ...state,
+                missed_tests: action.payload.data
+            }
+        case ADD_MISSED_TEST:
+        return{
+            ...state,
+            addStatus: action.payload
+        }
         case SEARCH_NOTICES:
             return{
                 ...state,
                 notices: action.payload.data,
-                loading: false,
+            }
+        case ADD_NOTICE:
+            return{
+                ...state,
+                addStatus: action.payload
             }
         case SEARCH_CASES:
             return{
                 ...state,
                 cases: action.payload.data
+            }
+        case SEARCH_EVENTS:
+            return{
+                ...state,
+                events: action.payload.data
+            }
+        case ADD_TEST_NOTICE:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
+        case ADD_EVENT:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
+        case ADD_STUDENT_CASE:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
+        case ADD_STUDENT_MARKS:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
+        case ADD_ASSESSMENT:
+            return{
+                ...state,
+                addStatus: action.payload
+            }
+        case STOP_SPINNER:
+            return{
+                ...state,
+                loading: false
+            }
+        case RESET_STATE:
+            return{
+                ...state,
+                teachers: [],
+                students: [],
+                student_marks: [],
+                parents: [],
+                testNotices: [],
+                notices: [],
+                events: [],
+                cases: [],
+                teacher: {},
+                student: {},
+                parent: {},
+                addStatus: {status: false},
+                loading: true,
+                authenticated: true,
             }
         default:
             return state

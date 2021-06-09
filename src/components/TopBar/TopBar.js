@@ -24,9 +24,6 @@ const TopBar = ({icons, grades}) => {
 
     // Count grades
     const gradesCount = (gradeArr, teacherGrade) => gradeArr.filter(grade => grade === teacherGrade).length;
-    console.log(gradesCount(grades, "Grade 8"));
-    console.log(grades);
-    
 
     return (
         <TopSummaryStyles grades>

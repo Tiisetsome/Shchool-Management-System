@@ -1,16 +1,21 @@
-import React, {useContext, useEffect, Fragment} from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 import {HiOutlineRefresh} from 'react-icons/hi'
+import {FaTrash} from 'react-icons/fa'
 import AdminContext from '../context/admin/adminContext'
-import Spinner from './Spinner/Spinner'
+import AuthContext from '../context/authentication/authContext'
+
+import EventCalender from './EventCalender'
 
 const HomeContent = () => {
 
-    // Use admin context
+    // Use admin and auth context
     const adminContext = useContext(AdminContext);
+    const authContext = useContext(AuthContext);
 
     // Destructure items
-    const {notices, teachers, searchTeachers, searchNotices, loading} = adminContext;
+    const {notices, searchNotices, deleteGeneralNotice} = adminContext;
+    const {role} = authContext;
 
     // Refresh notices
     const refreshNoticesHandler = () => {
@@ -44,12 +49,12 @@ const HomeContent = () => {
 
     return (
         <HomeContentStyles>
-            {loading? <Spinner/> : <Fragment>
                 <div className='calender'>
                     <div className='header'>
                         <p>Event Calender</p>
                         <HiOutlineRefresh style={style} />
                     </div>
+                    <EventCalender/>
                 </div>
                 <div className = 'notices'>
                     <div className='header'>
@@ -57,16 +62,20 @@ const HomeContent = () => {
                         <HiOutlineRefresh style={style} onClick={()=> refreshNoticesHandler()} />
                     </div>
                     <div className="notices-wrapper">
-                        {notices.map(notice => {
-                            return <div className="notice" key={notice.id}>
-                                <p>{formatDate(notice.created_at)}</p>
-                                <p>{notice.p_fname} {notice.p_lname}</p>
-                                <p>{notice.message}</p>
-                            </div>
-                        })}
+                        {notices.length > 0 ?
+                            notices.map(notice => {
+                                return <div className="notice" key={notice.id}>
+                                    <div>
+                                        <p>{formatDate(notice.created_at)}</p>
+                                        {role === "admin" ? <FaTrash style={{color: "rgb(177, 2, 2)", cursor: "pointer", fontSize: ".7rem"}} onClick = {() => deleteGeneralNotice(notice.id)}/> : null}
+                                    </div>
+                                    <p>{notice.p_fname} {notice.p_lname}</p>
+                                    <p>{notice.message}</p>
+                                </div>
+                            }) : null
+                        }
                     </div>
                 </div>
-            </Fragment> }
         </HomeContentStyles>
     )
 }
@@ -83,7 +92,7 @@ const HomeContentStyles = styled.section`
     }
 
     .calender{
-        height: 20rem;
+        height: 30rem;
         background-color: #fff;
     }
 
@@ -103,7 +112,7 @@ const HomeContentStyles = styled.section`
 
     .notices {
         background-color: #fff;
-        height: 20rem;
+        height: 30rem;
         overflow-y: scroll;
 
         .notices-wrapper{
@@ -112,13 +121,18 @@ const HomeContentStyles = styled.section`
             .notice{
                 margin-bottom: 1rem;
 
+                div:first-child{
+                    display: flex;
+                    justify-content: space-between;
+                }
+
                 p:first-child{
                     margin-bottom: .5rem;
                 }
 
                 p:nth-child(even){
-                    color: rgb(241, 55, 157);
-                    font-weight: 600;
+                    color: rgb(231, 175, 55);
+                    font-weight: 550;
                     margin-bottom: .5rem;
 
                     span{
@@ -128,6 +142,16 @@ const HomeContentStyles = styled.section`
                     }
                 }
             }
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        grid-template-columns: 1fr;
+        width: 100%;
+        margin: auto;
+
+        .notices {
+            margin-bottom: 2rem;
         }
     }
 `;

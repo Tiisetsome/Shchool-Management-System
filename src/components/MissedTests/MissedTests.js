@@ -1,25 +1,38 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const MissedTests = () => {
+const MissedTests = ({missedTests}) => {
+
+    // Date format
+    const formatDate = (noticeDate) => {
+
+        // Get time
+        const time = noticeDate.split(" ").splice(1, 2)[0];
+        
+        // Create months array
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+        // Create new date and format it
+        let fullDate = new Date(noticeDate);
+            fullDate = `${fullDate.getDate()} ${months[fullDate.getMonth()]} ${fullDate.getFullYear()} ${time}`;
+        
+        return fullDate;
+    }
+
     return (
         <MissedTestsStyles>
             <div className='header'>
                 <p>Missed Tests</p>
             </div>
             <div className="tests">
-                <div>
-                    <p>12 March 2021</p>
-                    <p>Life Orientation</p>
-                    <p>The student was sick and notified the teacher before hand</p>
-                    <p>Reason</p>
-                </div>
-                <div>
-                    <p>25 June 2021</p>
-                    <p>Mathematics</p>
-                    <p>No valid reason</p>
-                    <p>Reason</p>
-                </div>
+                {missedTests.map(missedTest => {
+                    return <div key={missedTest.id}>
+                                <p>{formatDate(missedTest.created_at)}</p>
+                                <p>{missedTest.subject}</p>
+                                <p>{missedTest.reason}</p>
+                                <p>reason</p>
+                           </div>
+                })}
             </div>
         </MissedTestsStyles>
     )
@@ -49,6 +62,17 @@ const MissedTestsStyles = styled.div`
 
             p:last-child{
                 color: rgb(214, 214, 214);;
+            }
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        .tests{
+            div{
+                p:first-child,
+                p:nth-child(2){
+                    font-weight: 500;
+                }
             }
         }
     }

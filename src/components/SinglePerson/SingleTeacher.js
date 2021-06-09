@@ -16,9 +16,42 @@ const SingleTeacher = () => {
     // Get Teacher id from params
     const {id} = useParams();
 
+    console.log(id);
+
     // Icons styles
     const style = {
         color: "rgb(38, 218, 203)",
+    }
+
+    const countStudents = (currentTeacher, allStudents) => {
+        const {classes, subjects} = currentTeacher;
+        
+        // Count
+        let filteredStudentsCount = [];
+        let filterStudents = allStudents.filter(student => student.grade === getMatch(classes, student.grade));
+            filterStudents.filter(currentStudent => currentStudent.subjects.forEach( subject => {
+            if(subject === getMatch(subjects, subject)){
+                filteredStudentsCount.push(currentStudent);
+            }
+        }));
+
+        // Remove duplicates
+        const countedStudents = [...new Set(filteredStudentsCount)];
+
+        function countStudentsByGender(gender){
+            return countedStudents.filter(currentStudent => currentStudent.gender === gender).length
+        } 
+        
+        return [countStudentsByGender("male"), countStudentsByGender("female"), 0];
+    }
+
+    // Matching grade or class
+    function getMatch(dataArr, compareValue){
+        for(let count = 0; count < dataArr.length; count++){
+            if(dataArr[count] === compareValue){
+                return dataArr[count];
+            }
+        }
     }
 
     useEffect(() => {
@@ -58,7 +91,7 @@ const SingleTeacher = () => {
                     <DataChart 
                         margin="2rem 0rem"
                         labels={['Male', 'Female']}
-                        data = {[30, 25, 0]}
+                        data = {Object.keys(teacher).length > 0 ? countStudents(teacher, students) : [30, 25, 0]}
                     />
                 </div>
             </div>
@@ -180,6 +213,37 @@ const SingleStyles = styled.section`
             div:nth-child(even){
                 background-color: rgb(248, 248, 171);
             }
+        }
+    }
+
+    @media screen and (max-width: 500px){
+        grid-template-columns: 1fr;
+        grid-template-areas:
+        "data"
+        "profile"
+        "notice";
+
+        .teacher-profile{
+
+            .teacher-details{
+                gap: 1rem;
+
+                div:nth-child(2){
+                    
+                    p{
+                        margin-bottom: 1rem !important;
+                    
+                        span{
+                            padding-bottom: 1rem;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+
+        .test-notices{
+            margin-bottom: 1rem;
         }
     }
 `;

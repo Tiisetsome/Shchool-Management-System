@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Search from '../Forms/Search'
 import AdminContext from '../../context/admin/adminContext'
+import AuthContext from '../../context/authentication/authContext'
 import {useParams} from 'react-router-dom'
 import StudentAttandace from '../StudentAttandace/StudentAttandace'
 import TestResults from '../Table/TestResults'
@@ -9,42 +10,70 @@ import MissedTests from '../MissedTests/MissedTests'
 
 const SingleStudent = () => {
 
-    // Store person id on search
-    const [personId, setPersonId] = useState('');
     
-    // Use admin contex
+    // Use admin context
     const adminContext = useContext(AdminContext);
-
+    const authContext = useContext(AuthContext);
+    
     // Destructure items
-    const {student, student_marks,  searchStudent, searchStudentMarks, getSinglePerson, setIndividuals} = adminContext;
+    const {teacher, student, student_marks, missed_tests,  searchStudent, searchStudentMarks, searchMissedTests, getStudentSingleMark} = adminContext;
+    const {role} = authContext;
 
+    // Store test type from search form
+    const [testType, setTestType] = useState('');
+    
     // Get Student id from params
     const {id} = useParams();
 
      // Update state
      const onChangeHandler = (e)=>{
-        setPersonId(e.target.value)
+        setTestType(e.target.value)
     }
 
     // Search single user
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        const person = getSinglePerson(personId);
+        getStudentSingleMark(testType);
+    }
+
+    
+    // Learners to be rendered
+    const getStudents = (marks, teacherSub) => {
         
-        // Update table if passes test
-        if(person.length > 0 && typeof person[0] !== "undefined"){
-            console.log(person);
-            //setIndividuals(person)
+        // Filter Marks by teacher's grades
+        let finalMarks = [];
+        if(marks.length > 0){
+            for(let i = 0; i < marks.length; i++){
+                if(marks[i].subject === filterMarks(marks[i].subject) || marks[i].subject === 'Online Assessment'){
+                    finalMarks = [...finalMarks, marks[i]]
+                }
+            }
         }
+
+        
+        function filterMarks(studentMark){
+            console.log(teacherSub)
+            for(let z = 0; z < teacherSub.length; z++){
+                console.log(studentMark)
+                if(studentMark === teacherSub[z]){
+                    return studentMark;
+                }
+            }
+        }
+
+        return finalMarks;
+    }
+    
+    const filterMissedTests = (currentStudent, missedTests) => {
+        return missedTests.filter(missedTest => missedTest.student_id === currentStudent);
     }
 
     useEffect(() => {
-        
-        // Get signle Student
         searchStudent(id);
         searchStudentMarks(id)
-    }, [])
-
+        searchMissedTests(id);
+    }, []);
+    
     return (
         <StudentStyles>
             <div className="student-profile-summary">
@@ -68,7 +97,7 @@ const SingleStudent = () => {
                         </div>
                     </div>
                 </div>
-                <MissedTests/>
+                <MissedTests missedTests = {filterMissedTests(id, missed_tests)}/>
                 <div className="results-summary">
                     <div className='header'>
                         <p>All Tests</p>
@@ -77,10 +106,10 @@ const SingleStudent = () => {
                             text = "Enter type"
                             onChangeHandler = {onChangeHandler}
                             onSubmitHandler = {onSubmitHandler}
-                            personId= {personId}
+                            personId= {testType}
                         />
                     </div>
-                    <TestResults student_marks = {student_marks}/>
+                    <TestResults student_marks = {role === "admin" ? student_marks : getStudents(student_marks, teacher.subjects)}/>
                 </div>
             </div>
             <StudentAttandace/>
@@ -155,6 +184,38 @@ const StudentStyles = styled.section`
             background: #fff;
         }
     }
+
+   @media screen and (max-width: 500px){
+
+        .header p{
+            font-weight: 550;
+        }
+
+        .student-profile-summary{
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                "profile"
+                "missed-test"
+                "results";
+
+            .student-profile .student-details{
+                gap: 1rem;
+
+                
+                div:nth-child(2){
+                    
+                    p{
+                        margin-bottom: 1rem !important;
+                    
+                        span{
+                            padding-bottom: 1rem;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+   }
 `;
 
 export default SingleStudent

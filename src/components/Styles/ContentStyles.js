@@ -7,16 +7,34 @@ export const ContentStyles = styled.main`
         grid-gap: 2rem;
         position: relative;
 
-        p{
-        color: grey;
-        font-size: .8rem;
-
-        span{
-            color: rgb(233, 140, 0);
+        .menu{
+            display: none;
         }
+
+        p{
+            color: grey;
+            font-size: .8rem;
+
+            span{
+                color: rgb(233, 140, 0);
+            }
 
         }
 
         .p-header {
-        padding-top: 3.5rem;
-    }`;
+            padding-top: 3.5rem;
+        }
+
+        @media screen and (max-width: 500px){
+            grid-template-columns: 1fr;
+            margin: auto;
+
+            .menu{
+                display: block;
+                position: absolute;
+                top: -2.8rem;
+                right: 0rem;
+                z-index: 2000;
+            }
+        }
+    `;

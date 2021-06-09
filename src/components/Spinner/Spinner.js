@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Spinner = () => {
+const Spinner = ({person}) => {
     return (
-        <SpinnerStyles>
+        <SpinnerStyles individual = {person}>
          <h3>Fetching Data</h3>
          <p>Please wait...</p>
          <div className="lds-ellipsis">
@@ -17,12 +17,13 @@ const Spinner = () => {
 }
 
 const SpinnerStyles = styled.section`
-    background: #fff;
+    background: linear-gradient(#fff, rgb(111, 239, 243));
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 16rem;
+    width: calc(100% + 2rem);
+    height: calc(100vh - 4.4rem);
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -94,7 +95,11 @@ const SpinnerStyles = styled.section`
         }
     }
   
-
+    @media screen and (max-width: 500px){
+        width: calc(100% + 4rem);
+        height: 100vh;
+        left: -2rem;
+    }
 `
 
 export default Spinner

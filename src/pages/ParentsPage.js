@@ -14,6 +14,7 @@ const ParentsPage = () => {
 
     // Destructure items
     const {parents} = adminContext;
+    console.log(parents)
 
     const parentGrades = [];
 
@@ -26,8 +27,8 @@ const ParentsPage = () => {
             <SideNavigation/>
             <div>
                 <p className="p-header">Home - <span>Parents</span></p>
-                <TopBar icons="teacher" grades= {parentGrades} />
-                <Parents/>
+                <TopBar icons="parent" grades= {parentGrades} />
+                <Parents parents = {parents}/>
             </div>
         </ContentStyles>
     )

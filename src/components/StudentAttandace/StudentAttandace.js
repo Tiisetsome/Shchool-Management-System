@@ -11,7 +11,9 @@ const StudentAttandace = () => {
             </div>
             <div className="chart">
                 <DataChart
-                    margin="0rem"
+                    margin={"0rem"}
+                    // width = {"200px"}
+                    // options = {{maintainAspectRatio: false}}
                     labels={['Present', 'Absent']}
                     data = {[30, 2, 0]}
                 />
@@ -48,6 +50,22 @@ const AttandaceStyles = styled.div`
             margin-bottom: 0rem;
             letter-spacing: .5rem;
         }
+    }
+
+    @media screen and (max-width: 500px){
+        grid-template-columns: 1fr;
+
+        div:first-child{
+                
+            p:first-child{
+                font-size: 1rem;
+            }
+    
+            p:last-child{
+                font-size: 2.7rem;
+            }
+        }
+    
     }
 `;
 

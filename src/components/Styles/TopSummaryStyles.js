@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const TopSummaryStyles = styled.section`
         display: grid;
         grid-template-columns: ${(props) => (props.grades? 'repeat(5, 1fr)' : 'repeat(4, 1fr)')};
+        grid-template-columns: ${(props) => (props.grades? 'repeat(5, 1fr)' : props.classes? `repeat(${props.classes}, 1fr)` : 'repeat(4, 1fr)')};
         grid-gap: 1rem;
         margin-bottom: 1rem;
 
@@ -13,6 +14,7 @@ export const TopSummaryStyles = styled.section`
             justify-content: center;
             gap: 2rem;
             background-color: #fff;
+            background: linear-gradient(#fff, rgb(199, 237, 238));
 
             p{
                 margin-bottom: 0rem;
@@ -44,5 +46,9 @@ export const TopSummaryStyles = styled.section`
                     max-width: 1.5rem;
                 }
             }
+        }
+    
+        @media screen and (max-width: 500px){
+            grid-template-columns: 1fr;
         }
 `;

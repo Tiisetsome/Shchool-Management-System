@@ -6,12 +6,14 @@ const Parents = () => {
 
       // Use admin context
       const adminContext = useContext(AdminContext);
+      console.log(adminContext.parents)
 
     return (
         <Table 
             heading="All Parents"
             title="Parent Id"
             linkTo="parents"
+            updateLink = "update"
             query = "parents"
             persons = {adminContext.parents}
         />

@@ -12,6 +12,7 @@ const Students = () => {
         title="Student Id"
         heading="All Students"
         linkTo = "students"
+        updateLink = "update"
         query = "student"
         persons = {adminContext.students}
       />

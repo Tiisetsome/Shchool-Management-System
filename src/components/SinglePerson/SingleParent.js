@@ -20,13 +20,15 @@ const SingleParent = () => {
         searchParent(id);
     }, [])
 
+    console.log(parent)
+
     return (
         <ParentStyles>
             <div className="parent-profile">
                     <div className='header'>
                         <p>Parent Profile</p>
                     </div>
-                    <div className='student-details'>
+                    <div className='parent-details'>
                         <div className="img-icon"></div>
                         <div className="details">
                             <p><span>Full Name</span> : {parent.fname} {parent.lname}</p>
@@ -66,7 +68,7 @@ const ParentStyles = styled.section`
             }
         }
 
-        .student-details{
+        .parent-details{
             margin: 2rem 1rem 1rem 1rem;
             display: grid;
             grid-template-columns: 6rem 1fr;
@@ -81,20 +83,40 @@ const ParentStyles = styled.section`
             div:nth-child(2){
                 
                 p{
-                    margin-bottom: 2rem;
-                    color: black;
-                    font-size: .7rem;
-                    font-family: Montserrat-Regular;
-
+                    margin-bottom: 1rem !important;
                     span{
-                        width: 8rem;
-                        display: inline-block;
-                        color: grey;
+                        padding-bottom: 1rem;
                     }
                 }
             }
         }
 
+    }
+
+    @media screen and (max-width: 500px){
+
+        .parent-profile{
+            .parent-details{
+                gap: 1rem;
+                
+                div:nth-child(2){
+                    
+                    p{
+                        margin-bottom: 2rem;
+                        color: black;
+                        font-size: .7rem;
+                        font-family: Montserrat-Regular;
+    
+                        span{
+                            width: 8rem;
+                            display: block;
+                            color: grey;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 `;
 

@@ -29,6 +29,18 @@ export const LoginStyles = styled.section`
         gap: 3rem;
 
         form{
+
+            .error{
+                width: 80%;
+                padding: .5rem;
+                margin-bottom: 1rem;
+                font-size: 0.8rem;
+                font-weight: 600;
+                text-align: center;
+                color: #fff;
+                background-color: rgb(180, 4, 4);
+            }
+
              div{
                  width: 80%;
 
@@ -115,7 +127,7 @@ export const LoginStyles = styled.section`
         top: 50%;
         left: 50%;
         width: 50%;
-        height: 25rem;
+        height: 30rem;
         transform: translate(-50%, -50%);
         background: #fff;
         position: absolute;
@@ -125,6 +137,7 @@ export const LoginStyles = styled.section`
 
         form{
             width: 50%;
+            position: relative;
 
             div{
 
@@ -168,5 +181,99 @@ export const LoginStyles = styled.section`
         font-size: .8rem;
         font-family: Montserrat-Medium;
     }
+
+   @media screen and (max-width: 500px){
+       .container{
+           grid-template-columns: 1fr;
+           grid-template-areas:
+                "img"
+                "form";
+           gap: 2rem;
+
+           .visuals{
+                grid-area: img;
+
+               img{
+                    max-width: 15rem;
+                }
+                
+                p{
+                    margin-bottom: .7rem;
+                    font-size: .8rem;
+                }
+
+                h3{
+                    font-size: 1rem;
+                    text-align: center;
+                    margin-bottom: 0rem;
+                }
+           }
+
+           form{
+               grid-area: form;
+
+               .error{
+                font-weight: 400;
+                }
+
+                div{
+                    width: 100%;
+
+                    label {
+                        font-size: .75rem;
+                    }
+
+                    input{
+                        padding: .4rem;
+                    }
+
+                    button{
+                        padding: .5rem;
+                    }
+
+                    li{
+                        font-size: .75rem;
+                    }
+                }
+           }
+       }
+
+       .signup-form{
+            width: 90%;
+            margin: auto;
+
+            form{
+                width: 90%;
+
+                div{
+                    width: 100%;
+
+                    label {
+                        font-size: .75rem;
+                    }
+
+                    input{
+                        padding: .4rem;
+                    }
+
+                    button{
+                        padding: .5rem;
+                    }
+
+                    li{
+                        font-size: .75rem;
+                    }
+                }
+            }
+        }
+
+       
+        footer p{
+            width: 80%;
+            margin: 3rem auto 0rem auto;
+            font-size: .7rem;
+            text-align: center;
+        }
+   }
 
 `;

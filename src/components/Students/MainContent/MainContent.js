@@ -4,6 +4,7 @@ import {HiOutlineRefresh} from 'react-icons/hi'
 import StudentContext from '../../../context/students/studentContext'
 
 import Spinner from '../../Spinner/Spinner'
+import EventCalender from '../../EventCalender'
 
 const MainContent = () => {
 
@@ -46,6 +47,7 @@ const MainContent = () => {
                                 <p>Event Calender</p>
                                 <HiOutlineRefresh style={style} />
                             </div>
+                            <EventCalender/>
                         </div>
                         <div className = 'notices'>
                             <div className='header'>
@@ -53,13 +55,15 @@ const MainContent = () => {
                                 <HiOutlineRefresh style={style}/>
                             </div>
                             <div className="notices-wrapper">
-                                {notices.map(notice => {
-                                    return <div className="notice" key={notice.id}>
-                                        <p>{formatDate(notice.created_at)}</p>
-                                        <p>{notice.p_fname} {notice.p_lname}</p>
-                                        <p>{notice.message}</p>
-                                    </div>
-                                })}
+                                {notices.length > 0 ?
+                                    notices.map(notice => {
+                                        return <div className="notice" key={notice.id}>
+                                            <p>{formatDate(notice.created_at)}</p>
+                                            <p>{notice.p_fname} {notice.p_lname}</p>
+                                            <p>{notice.message}</p>
+                                        </div>
+                                    }) : null
+                                }
                             </div>
                         </div>
                     </Fragment>
@@ -80,7 +84,7 @@ const HomeContentStyles = styled.section`
     }
 
     .calender{
-        height: 20rem;
+        height: 30rem;
         background-color: #fff;
     }
 
@@ -100,7 +104,7 @@ const HomeContentStyles = styled.section`
 
     .notices {
         background-color: #fff;
-        height: 20rem;
+        height: 30rem;
         overflow-y: scroll;
 
         .notices-wrapper{
@@ -127,6 +131,11 @@ const HomeContentStyles = styled.section`
             }
         }
     }
+
+    @media screen and (max-width: 500px){
+        grid-template-columns: 1fr;
+    }
+
 `;
 
 export default MainContent

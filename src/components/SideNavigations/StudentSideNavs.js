@@ -1,15 +1,30 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Link} from 'react-router-dom'
 import styled from 'styled-components'
 import {AiFillDashboard} from 'react-icons/ai'
-import {GiTeacher} from 'react-icons/gi'
-import {IoIosPeople} from 'react-icons/io'
-import {IoSchoolSharp} from 'react-icons/io5'
-import PeopleSharpIcon from '@material-ui/icons/PeopleSharp'
-import EventAvailableIcon from '@material-ui/icons/EventAvailable'
-import {IoIosArrowForward, IoIosArrowDown} from 'react-icons/io'
+import {MdEventAvailable, MdAssessment} from 'react-icons/md'
+import {AiFillNotification} from 'react-icons/ai'
+import {BsPersonFill} from 'react-icons/bs'
+import {FaBusinessTime} from 'react-icons/fa'
+import {AiOutlinePoweroff} from 'react-icons/ai'
 
-const StudentSideNavs = () => {
+import AdminContext from '../../context/admin/adminContext'
+import StudentContext from '../../context/students/studentContext'
+import AuthContext from '../../context/authentication/authContext'
+
+const StudentSideNavs = ({menuShow}) => {
+
+    // Use context
+    const adminContext = useContext(AdminContext)
+    const authContext = useContext(AuthContext)
+    const studentContext = useContext(StudentContext)
+
+    // Reset states
+    const resetStates = () => {
+        adminContext.resetAdminState();
+        studentContext.resetStudentState();
+        authContext.logOutUser();
+    }
 
     // Icons styles
     const style = {
@@ -22,24 +37,46 @@ const StudentSideNavs = () => {
         color: "#fff"
     }
 
+    console.log(menuShow)
+
     return (
-        <SideStyles>
+        <SideStyles toggleMenuShow = {menuShow}>
             <ul>
-                <Link to='/student_dashboard' style={{color: "#fff"}}>
-                    <li> <AiFillDashboard style={style}/> Dashboard</li>
-                </Link>
-                <Link to='/student_dashboard/profile' style={{color: "#fff"}}>
-                    <li> <GiTeacher style={style}/> My Profile</li>
-                </Link>
-                <Link to='/student_dashboard/events' style={{color: "#fff"}}>
-                    <li> <PeopleSharpIcon style={style}/> Events</li>
-                </Link>
-                <Link to='/parents' style={{color: "#fff"}}>
-                    <li> <IoIosPeople style={style}/> Timetable</li>
-                </Link>
-                <Link to='/events' style={{color: "#fff"}}> 
-                    <li> <EventAvailableIcon style={style}/> Online Assessments</li>
-                </Link>
+                <div>
+                    <Link to='/student_dashboard' style={{color: "#fff"}}>
+                        <li> <AiFillDashboard style={style}/> Dashboard</li>
+                    </Link>
+                </div>
+                <div>
+                    <Link to='/student_dashboard/profile' style={{color: "#fff"}}>
+                        <li> <BsPersonFill style={style}/> My Profile</li>
+                    </Link>
+                </div>
+                <div>
+                    <Link to='/student_dashboard/events' style={{color: "#fff"}}>
+                        <li> <MdEventAvailable style={style}/> Events</li>
+                    </Link>
+                </div>
+                <div>
+                    <Link to='/student_dashboard/tests' style={{color: "#fff"}}>
+                        <li> <AiFillNotification style={style}/> Test Notices</li>
+                    </Link>
+                </div>
+                {/* <div>
+                    <Link to='/student_dashboard/timetable' style={{color: "#fff"}}>
+                        <li> <FaBusinessTime style={style}/> Timetable</li>
+                    </Link>
+                </div> */}
+                <div>
+                    <Link to='/student_dashboard/assessment' style={{color: "#fff"}}> 
+                        <li> <MdAssessment style={style}/> Online Assessments</li>
+                    </Link>
+                </div>
+                <div>
+                    <Link to='/login' style={{color: "#fff"}}>
+                        <li onClick={() => resetStates()}><AiOutlinePoweroff style={style}/> Logout</li>
+                    </Link>
+                </div>
             </ul>
         </SideStyles>
     )
@@ -61,9 +98,30 @@ const SideStyles = styled.aside`
             display: flex;
             align-items: center;
             gap: 1rem;
+            cursor: pointer;
         }
 
-        li:before{
+        li:hover{
+            color: #E98C00;
+        }
+
+        .notices div,
+        .forms div{
+            padding-bottom: 0rem;
+            margin-left: 4rem;
+        }
+
+        .notices div li,
+        .forms div li{
+            padding-top: 0rem;
+            margin-bottom: 0rem;
+        }
+
+        div{
+            position: relative;
+        }
+
+        div:before{
             content: "";
             bottom: 0;
             left: -2rem;
@@ -71,32 +129,18 @@ const SideStyles = styled.aside`
             border-bottom: 0.1rem solid grey;
             position: absolute;
         }
-
-        li.forms{
-            display: block;
-        }
-
-        div:first-child{
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            cursor: pointer;
-        }
-
-        div:last-child{
-            
-        }
-
-        div:last-child li{
-            margin-left: 4rem;
-            padding-bottom: .5rem;
-            cursor: pointer;
-        }
-
-        div:last-child li:before{
-            border-bottom : none;
-        }
     }
+
+    @media screen and (max-width: 500px){
+        display: ${(props) => props.toggleMenuShow == true? "block" : "none"};
+        position: absolute;
+        width: 100vw;
+        height: 100%;
+        top: 0;
+        left: -1rem;
+        z-index: 1000;
+    }
+        
 `;
 
 

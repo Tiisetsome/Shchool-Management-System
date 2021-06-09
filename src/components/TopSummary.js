@@ -14,7 +14,7 @@ const TopSummary = () => {
     const adminContext = useContext(AdminContext);
 
     // Destructure items
-    const {teachers, students, parents, notices, searchTeachers, searchParents, searchStudents, searchNotices, searchCases} = adminContext;
+    const {teachers, students, parents, notices} = adminContext;
 
     // Icons styles
     const style = {
@@ -24,17 +24,16 @@ const TopSummary = () => {
 
     }
 
-    useEffect(() => {
-        
-        // Get teachers
-        searchTeachers('teachers');
-        searchParents('parents');
-        searchNotices();
-        searchCases();
-        searchStudents('student');
+    const countParents = (allParents) => {
+        let counter = 0;
+        allParents.forEach(parent => {
+            parent.classes.forEach(parentClasses => {
+                counter++;
+            })
+        })
 
-    }, [])
-
+        return counter;
+    }
     console.log('Top summary rendered')
 
     return (
@@ -53,7 +52,7 @@ const TopSummary = () => {
                     <p>Parents</p>
                 </div>
                 <div className="line"></div>
-                <p className="count">{parents.length}</p>
+                <p className="count">{parents.length > 0 ? countParents(parents) : 0}</p>
             </div>
             <div className="cartegory-wrapper">
                 <div className="cartegory">
@@ -66,7 +65,7 @@ const TopSummary = () => {
             <div className="cartegory-wrapper">
                 <div className="cartegory">
                     <EventAvailableIcon style={{fontSize: '1.5rem', marginBottom: '.5rem', color: "rgb(241, 55, 157)"}}/>
-                    <p>Events</p>
+                    <p>Notices</p>
                 </div>
                 <div className="line"></div>
                 <p className="count">{notices.length}</p>

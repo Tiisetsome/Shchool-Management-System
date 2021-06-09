@@ -26,7 +26,7 @@ const StudentsPage = () => {
             <SideNavigation/>
             <div>
                 <p className="p-header">Home - <span>Students</span></p>
-                <TopBar icons="teacher" grades= {studentGrades} />
+                <TopBar icons="student" grades= {studentGrades} />
                 <Students/>
             </div>
         </ContentStyles>

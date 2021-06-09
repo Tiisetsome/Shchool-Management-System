@@ -1,21 +1,24 @@
 import React, {useContext, useEffect} from 'react'
 import styled from 'styled-components'
 import StudentContext from '../../context/students/studentContext'
+import AuthContext from '../../context/authentication/authContext'
 
 import StudentSideNavs from '../../components/SideNavigations/StudentSideNavs'
 import {ContentStyles} from '../../components/Styles/ContentStyles'
 
 const StudentMyProfile = () => {
 
-    // Use student context
+    // Use student and auth context
     const studentContext = useContext(StudentContext);
+    const authContext = useContext(AuthContext);
 
     // Destructure items
     const{student, searchStudent} = studentContext;
+    const{person_id} = authContext;
 
     useEffect(() => {
         // Get student data
-        searchStudent(20210111);
+        searchStudent(person_id);
     }, [])
 
     return (
@@ -45,10 +48,11 @@ const StudentMyProfile = () => {
 }
 
 const ProfileStyles = styled(ContentStyles)`
+    
     P{
         margin-bottom: 0rem;
     }
-
+    
     .p-header{
         background: #F0F0F0 !important;
         padding-bottom: 2rem;
@@ -67,10 +71,12 @@ const ProfileStyles = styled(ContentStyles)`
             color: black !important;
         }
     }
-
+    
     .student_profile{
         margin-bottom: 2rem;
         background: #fff;
+        font-family: Montserrat-Medium;
+
 
         .student_details{
             margin: 2rem 1rem 1rem 1rem;
@@ -89,8 +95,8 @@ const ProfileStyles = styled(ContentStyles)`
                 p{
                     margin-bottom: 2rem;
                     color: black;
-                    font-size: .7rem;
-                    font-family: Montserrat-Regular;
+                    font-size: .75rem;
+                    font-family: Montserrat-Medium;
 
                     span{
                         width: 8rem;
@@ -101,6 +107,33 @@ const ProfileStyles = styled(ContentStyles)`
             }
         }
 
+    }
+
+    @media screen and (max-width: 500px){
+
+        .header p{
+            font-weight: 500;
+        }
+    
+        .student_profile{
+            margin-bottom: 2rem;
+
+            .student_details{
+                gap: 1rem;
+    
+                div:nth-child(2){
+                    
+                    p{
+                        margin-bottom: 1rem !important;
+                        font-size: .7rem !important;
+                    
+                        span{
+                            padding-bottom: 1rem;
+                            display: block;
+                        }
+                    }
+                }
+            }
     }
 `;
 

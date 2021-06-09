@@ -3,18 +3,26 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter as Router} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import axios from 'axios'
 import AdminState from './context/admin/AdminState';
 import StudentState from './context/students/StudentState'
+import AuthState from './context/authentication/AuthState'
+
+// Set base url
+// axios.defaults.baseURL = 'http://localhost:4430/sandbox/student-management-system/api/';
+axios.defaults.baseURL = 'https://mosepedi.t-tech.co.za/api/';
 
 ReactDOM.render(
-    <Router>
+  <Router>
+    <AuthState>
       <AdminState>
         <StudentState>
           <App />
         </StudentState>
       </AdminState>
-    </Router>,
+    </AuthState>
+  </Router>,
   document.getElementById('root')
 );
 
